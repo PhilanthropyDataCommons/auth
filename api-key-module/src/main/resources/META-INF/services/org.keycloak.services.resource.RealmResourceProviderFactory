@@ -1,1 +1,1 @@
-com.pdc.providers.ApiKeyResourceProviderFactory
+org.philanthropydatacommons.providers.ApiKeyResourceProviderFactory

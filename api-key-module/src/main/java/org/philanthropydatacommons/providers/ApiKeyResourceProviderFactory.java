@@ -1,4 +1,4 @@
-package com.pdc.providers;
+package org.philanthropydatacommons.providers;
 
 import org.keycloak.Config;
 import org.keycloak.models.KeycloakSession;
@@ -7,7 +7,6 @@ import org.keycloak.services.resource.RealmResourceProvider;
 import org.keycloak.services.resource.RealmResourceProviderFactory;
 
 public class ApiKeyResourceProviderFactory implements RealmResourceProviderFactory {
-
 
     public RealmResourceProvider create(KeycloakSession session) {
         return new ApiKeyResourceProvider(session);

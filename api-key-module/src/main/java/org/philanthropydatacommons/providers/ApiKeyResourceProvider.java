@@ -1,11 +1,10 @@
-package com.pdc.providers;
+package org.philanthropydatacommons.providers;
 
-import com.pdc.resources.ApiKeyResource;
+import org.philanthropydatacommons.resources.ApiKeyResource;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.services.resource.RealmResourceProvider;
 
 public class ApiKeyResourceProvider implements RealmResourceProvider {
-
 
     private KeycloakSession session;
 
