@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>api-key-module</artifactId>
-    <groupId>com.pdc</groupId>
+    <groupId>org.philanthropydatacommons</groupId>
     <version>0.1</version>
 
     <properties>
