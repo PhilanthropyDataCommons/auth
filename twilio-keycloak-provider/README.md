@@ -6,9 +6,9 @@ Based on https://github.com/dasniko/keycloak-2fa-sms-authenticator at 4205a6c.
 
 ## How to build and run tests
 
-Start in the `lib` directory
+Start in the `twilio-keycloak-provider` directory
 
-- `cd twilio-keycloak-provider/lib`
+- `cd twilio-keycloak-provider`
 
 ### Build with dependencies included in a fat jar (recommended)
 

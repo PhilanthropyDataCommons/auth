@@ -7,5 +7,6 @@
  * in the user manual at https://docs.gradle.org/8.0/userguide/multi_project_builds.html
  */
 
-rootProject.name = "twilio-keycloak-provider"
-include("lib")
+rootProject.name = "auth"
+include("twilio-keycloak-provider")
+include("pdc-keycloak-theme")

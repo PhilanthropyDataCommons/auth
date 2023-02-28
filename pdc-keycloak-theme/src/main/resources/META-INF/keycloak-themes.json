@@ -1,0 +1,6 @@
+{
+    "themes": [{
+        "name" : "pdc-keycloak-theme",
+        "types": [ "login" ]
+    }]
+}
