@@ -21,4 +21,4 @@ jobs:
           java-version: '17'
       - name: Build a shaded fat jar.
         working-directory: twilio-keycloak-provider
-        run: ./gradlew shadowJar
+        run: ../gradlew shadowJar

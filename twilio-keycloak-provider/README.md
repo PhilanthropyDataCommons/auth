@@ -6,9 +6,9 @@ Based on https://github.com/dasniko/keycloak-2fa-sms-authenticator at 4205a6c.
 
 ## How to build and run tests
 
-Start in the `lib` directory
+Start in the `twilio-keycloak-provider` directory
 
-- `cd twilio-keycloak-provider/lib`
+- `cd twilio-keycloak-provider`
 
 ### Build with dependencies included in a fat jar (recommended)
 
@@ -78,3 +78,5 @@ Use the following environment variables to configure Twilio:
 ## License
 
 Expat (also called MIT) license, see LICENSE file.
+
+The license choice is based on the license of the original work by Niko Köbler at https://github.com/dasniko/keycloak-2fa-sms-authenticator. This module started with that code and re-uses it, so it is a combined work. To respect the original authors' choice of a free software license, avoid license confusion, and allow improvements in this repository to be used upstream, we keep the original license.
