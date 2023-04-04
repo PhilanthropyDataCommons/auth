@@ -2,17 +2,111 @@
    https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
 */
 
+:root {
+    --pf-global--spacer--form-element: 0.5rem;
+}
+
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-ext-400-normal.de95c5209ef26bf69ccf.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-400-normal.d1cfd8b7bb2cbe3fabb0.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-ext-400-normal.1b1cb10170f2616853f0.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-400-normal.9c7d72dcc7a044db07b1.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-vietnamese-400-normal.e84a4369ad213f658ebb.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-ext-400-normal.fbd4fe33a443c83e04f1.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-400-normal.c0d191aa7fb798623030.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-ext-600-normal.29a55ddb4816749dfc22.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-600-normal.7d2394dbdbea98e1f5e3.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-ext-600-normal.ad339cedd0f2155914fb.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-600-normal.d957dc4c044b538e2427.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-vietnamese-600-normal.2a10e8084d8796e01039.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-ext-600-normal.7484e298a92a9780c8b8.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-600-normal.ba0db8c652c563d236e1.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-ext-700-normal.88f4c479ac07fe28684c.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-cyrillic-700-normal.8eeb9cef97afd8a04cda.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-ext-700-normal.3c5cf9575a708134a930.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-greek-700-normal.64102f7204fc75f9aa8c.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-vietnamese-700-normal.4ef9048963d2ac341810.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-ext-700-normal.8822d643b28f1ce6bd54.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-700-normal.a10519031679e736153a.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+
 /* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
    This clashes with the "keycloak-bg.png' background defined on the body below.
    Therefore the Patternfly background must be set to none. */
-   .login-pf {
+.login-pf {
     background: none;
 }
 
 .login-pf body {
-    background: url("../img/keycloak-bg.png") no-repeat center center fixed;
-    background-size: cover;
-    height: 100%;
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-image: none;
+    background-color: #EFEFEF;
+}
+
+.login-pf-page {
+    padding-top: 40px;
+}
+
+.login-pf-page #kc-header-wrapper {
+    background: transparent url('https://pilot.philanthropydatacommons.org/static/media/pdc-logo.fa9b69291f8960de93e6.png') center center no-repeat;
+    background-size: contain;
+    aspect-ratio: 500/119;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0;
+    text-indent: -9999px;
+}
+
+.login-pf-page .card-pf {
+    border-top: none;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    padding-top: 20px;
+}
+
+.login-pf-page .login-pf-header h1 {
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .login-pf-page .login-pf-header h1 {
+        font-size: 1.2rem;
+    }
+}
+
+.login-pf-page .pf-c-button.pf-m-block {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+}
+
+.login-pf-page .pf-c-form__label {
+    --pf-c-form__label--FontSize: 0.85rem;
+}
+
+.login-pf-page .pf-c-form__label-text {
+    --pf-c-form__label-text--FontWeight: 400;
+}
+
+.login-pf-page .pf-c-form-control {
+    --pf-c-form-control--BorderRadius: 5px;
+    --pf-c-form-control--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--hover--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-form-control:focus {
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-button {
+    --pf-c-button--BorderRadius: 5px;
+    --pf-c-button--m-primary--BackgroundColor: #1176BC;
+    --pf-c-button--FontWeight: 600;
+}
+
+.login-pf-page .btn-lg {
+    border-radius: 5px;
+    padding: 10px;
 }
 
 textarea.pf-c-form-control {
