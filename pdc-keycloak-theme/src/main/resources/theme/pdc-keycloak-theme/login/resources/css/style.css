@@ -1,7 +1,3 @@
-/* Original CSS copied from the following URL under the Apache License 2.0:
-   https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
-*/
-
 :root {
     --pf-global--spacer--form-element: 0.5rem;
 }
@@ -28,86 +24,9 @@
 @font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-ext-700-normal.8822d643b28f1ce6bd54.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
 @font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-latin-700-normal.a10519031679e736153a.woff2) format("woff2"),url(https://pilot.philanthropydatacommons.org/static/media/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
 
-/* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
-   This clashes with the "keycloak-bg.png' background defined on the body below.
-   Therefore the Patternfly background must be set to none. */
-.login-pf {
-    background: none;
-}
-
-.login-pf body {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    background-image: none;
-    background-color: #EFEFEF;
-}
-
-.login-pf-page {
-    padding-top: 40px;
-}
-
-.login-pf-page #kc-header-wrapper {
-    background: transparent url('https://pilot.philanthropydatacommons.org/static/media/pdc-logo.fa9b69291f8960de93e6.png') center center no-repeat;
-    background-size: contain;
-    aspect-ratio: 500/119;
-    max-width: 300px;
-    margin: 0 auto;
-    padding: 0;
-    text-indent: -9999px;
-}
-
-.login-pf-page .card-pf {
-    border-top: none;
-    border-radius: 5px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-    padding-top: 20px;
-}
-
-.login-pf-page .login-pf-header h1 {
-    font-weight: 600;
-}
-
-@media (min-width: 768px) {
-    .login-pf-page .login-pf-header h1 {
-        font-size: 1.2rem;
-    }
-}
-
-.login-pf-page .pf-c-button.pf-m-block {
-    display: inline-block;
-    width: auto;
-    padding: 10px 20px;
-}
-
-.login-pf-page .pf-c-form__label {
-    --pf-c-form__label--FontSize: 0.85rem;
-}
-
-.login-pf-page .pf-c-form__label-text {
-    --pf-c-form__label-text--FontWeight: 400;
-}
-
-.login-pf-page .pf-c-form-control {
-    --pf-c-form-control--BorderRadius: 5px;
-    --pf-c-form-control--BorderBottomColor: var(--pf-global--BorderColor--300);
-    --pf-c-form-control--hover--BorderBottomColor: var(--pf-global--BorderColor--300);
-    --pf-c-form-control--focus--BorderBottomColor: var(--pf-global--BorderColor--300);
-    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
-}
-
-.login-pf-page .pf-c-form-control:focus {
-    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
-}
-
-.login-pf-page .pf-c-button {
-    --pf-c-button--BorderRadius: 5px;
-    --pf-c-button--m-primary--BackgroundColor: #1176BC;
-    --pf-c-button--FontWeight: 600;
-}
-
-.login-pf-page .btn-lg {
-    border-radius: 5px;
-    padding: 10px;
-}
+/* Begin: Original CSS copied from the following URL under the Apache License 2.0:
+   https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
+*/
 
 textarea.pf-c-form-control {
 	height: auto;
@@ -692,3 +611,88 @@ ul#kc-totp-supported-apps {
     margin-bottom: 16px;
 }
 /* End Recovery codes */
+
+/* End: Original CSS copied from the following URL under the Apache License 2.0:
+   https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
+*/
+
+/* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
+   This clashes with the "keycloak-bg.png' background defined on the body below.
+   Therefore the Patternfly background must be set to none. */
+.login-pf {
+    background: none;
+}
+
+.login-pf body {
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-image: none;
+    background-color: #EFEFEF;
+}
+
+.login-pf-page {
+    padding-top: 40px;
+}
+
+.login-pf-page #kc-header-wrapper {
+    background: transparent url('https://pilot.philanthropydatacommons.org/static/media/pdc-logo.fa9b69291f8960de93e6.png') center center no-repeat;
+    background-size: contain;
+    aspect-ratio: 500/119;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0;
+    text-indent: -9999px;
+}
+
+.login-pf-page .card-pf {
+    border-top: none;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    padding-top: 20px;
+}
+
+.login-pf-page .login-pf-header h1 {
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .login-pf-page .login-pf-header h1 {
+        font-size: 1.2rem;
+    }
+}
+
+.login-pf-page .pf-c-button.pf-m-block {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+}
+
+.login-pf-page .pf-c-form__label {
+    --pf-c-form__label--FontSize: 0.85rem;
+}
+
+.login-pf-page .pf-c-form__label-text {
+    --pf-c-form__label-text--FontWeight: 400;
+}
+
+.login-pf-page .pf-c-form-control {
+    --pf-c-form-control--BorderRadius: 5px;
+    --pf-c-form-control--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--hover--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-form-control:focus {
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-button {
+    --pf-c-button--BorderRadius: 5px;
+    --pf-c-button--m-primary--BackgroundColor: #1176BC;
+    --pf-c-button--FontWeight: 600;
+}
+
+.login-pf-page .btn-lg {
+    border-radius: 5px;
+    padding: 10px;
+}
