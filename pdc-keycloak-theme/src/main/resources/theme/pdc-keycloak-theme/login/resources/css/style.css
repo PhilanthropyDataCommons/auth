@@ -1,0 +1,698 @@
+:root {
+    --pf-global--spacer--form-element: 0.5rem;
+}
+
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-cyrillic-ext-400-normal.de95c5209ef26bf69ccf.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-cyrillic-400-normal.d1cfd8b7bb2cbe3fabb0.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-greek-ext-400-normal.1b1cb10170f2616853f0.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-greek-400-normal.9c7d72dcc7a044db07b1.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-vietnamese-400-normal.e84a4369ad213f658ebb.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-latin-ext-400-normal.fbd4fe33a443c83e04f1.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:400;src:url(../fonts/source-sans-pro-latin-400-normal.c0d191aa7fb798623030.woff2) format("woff2"),url(../fonts/source-sans-pro-all-400-normal.1882629b5eaf2ec74fbf.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-cyrillic-ext-600-normal.29a55ddb4816749dfc22.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-cyrillic-600-normal.7d2394dbdbea98e1f5e3.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-greek-ext-600-normal.ad339cedd0f2155914fb.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-greek-600-normal.d957dc4c044b538e2427.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-vietnamese-600-normal.2a10e8084d8796e01039.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-latin-ext-600-normal.7484e298a92a9780c8b8.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:600;src:url(../fonts/source-sans-pro-latin-600-normal.ba0db8c652c563d236e1.woff2) format("woff2"),url(../fonts/source-sans-pro-all-600-normal.dc404c2900bb751a6d7c.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-cyrillic-ext-700-normal.88f4c479ac07fe28684c.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0460-052f,u+1c80-1c88,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-cyrillic-700-normal.8eeb9cef97afd8a04cda.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-greek-ext-700-normal.3c5cf9575a708134a930.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+1f??}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-greek-700-normal.64102f7204fc75f9aa8c.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0370-03ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-vietnamese-700-normal.4ef9048963d2ac341810.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+1ea0-1ef9,u+20ab}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-latin-ext-700-normal.8822d643b28f1ce6bd54.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+0100-024f,u+0259,u+1e??,u+2020,u+20a0-20ab,u+20ad-20cf,u+2113,u+2c60-2c7f,u+a720-a7ff}
+@font-face{font-display:swap;font-family:Source Sans Pro;font-style:normal;font-weight:700;src:url(../fonts/source-sans-pro-latin-700-normal.a10519031679e736153a.woff2) format("woff2"),url(../fonts/source-sans-pro-all-700-normal.fc594703b14b8a869dfc.woff) format("woff");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+2000-206f,u+2074,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}
+
+/* Begin: Original CSS copied from the following URL under the Apache License 2.0:
+   https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
+*/
+
+textarea.pf-c-form-control {
+	height: auto;
+}
+
+.pf-c-alert__title {
+    font-size: var(--pf-global--FontSize--xs);
+}
+
+p.instruction {
+    margin: 5px 0;
+}
+
+.pf-c-button.pf-m-control {
+    border: solid var(--pf-global--BorderWidth--sm);
+    border-color: rgba(230, 230, 230, 0.5);
+}
+
+h1#kc-page-title {
+    margin-top: 10px;
+}
+
+#kc-locale ul {
+    background-color: var(--pf-global--BackgroundColor--100);
+    display: none;
+    top: 20px;
+    min-width: 100px;
+    padding: 0;
+}
+
+#kc-locale-dropdown{
+    display: inline-block;
+}
+
+#kc-locale-dropdown:hover ul {
+    display:block;
+}
+
+#kc-locale-dropdown a {
+    color: var(--pf-global--Color--200);
+    text-align: right;
+    font-size: var(--pf-global--FontSize--sm);
+}
+
+a#kc-current-locale-link::after {
+    content: "\2c5";
+    margin-left: var(--pf-global--spacer--xs)
+}
+
+.login-pf .container {
+    padding-top: 40px;
+}
+
+.login-pf a:hover {
+    color: #0099d3;
+}
+
+#kc-logo {
+    width: 100%;
+}
+
+div.kc-logo-text {
+    background-image: url(../img/keycloak-logo-text.png);
+    background-repeat: no-repeat;
+    height: 63px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+div.kc-logo-text span {
+    display: none;
+}
+
+#kc-header {
+    color: #ededed;
+    overflow: visible;
+    white-space: nowrap;
+}
+
+#kc-header-wrapper {
+    font-size: 29px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    line-height: 1.2em;
+    padding: 62px 10px 20px;
+    white-space: normal;
+}
+
+#kc-content {
+    width: 100%;
+}
+
+#kc-attempted-username {
+    font-size: 20px;
+    font-family: inherit;
+    font-weight: normal;
+    padding-right: 10px;
+}
+
+#kc-username {
+    text-align: center;
+    margin-bottom:-10px;
+}
+
+#kc-webauthn-settings-form {
+    padding-top: 8px;
+}
+
+#kc-form-webauthn .select-auth-box-parent {
+    pointer-events: none;
+}
+
+#kc-form-webauthn .select-auth-box-desc {
+    color: var(--pf-global--palette--black-600);
+}
+
+#kc-form-webauthn .select-auth-box-headline {
+    color: var(--pf-global--Color--300);
+}
+
+#kc-form-webauthn .select-auth-box-icon {
+    flex: 0 0 3em;
+}
+
+#kc-form-webauthn .select-auth-box-icon-properties {
+    margin-top: 10px;
+    font-size: 1.8em;
+}
+
+#kc-form-webauthn .select-auth-box-icon-properties.unknown-transport-class {
+    margin-top: 3px;
+}
+
+#kc-form-webauthn .pf-l-stack__item {
+    margin: -1px 0;
+}
+
+#kc-content-wrapper {
+    margin-top: 20px;
+}
+
+#kc-form-wrapper {
+    margin-top: 10px;
+}
+
+#kc-info {
+    margin: 20px -40px -30px;
+}
+
+#kc-info-wrapper {
+    font-size: 13px;
+    padding: 15px 35px;
+    background-color: #F0F0F0;
+}
+
+#kc-form-options span {
+    display: block;
+}
+
+#kc-form-options .checkbox {
+    margin-top: 0;
+    color: #72767b;
+}
+
+#kc-terms-text {
+    margin-bottom: 20px;
+}
+
+#kc-registration {
+    margin-bottom: 0;
+}
+
+/* TOTP */
+
+.subtitle {
+    text-align: right;
+    margin-top: 30px;
+    color: #909090;
+}
+
+.required {
+    color: var(--pf-global--danger-color--200);
+}
+
+ol#kc-totp-settings {
+    margin: 0;
+    padding-left: 20px;
+}
+
+ul#kc-totp-supported-apps {
+    margin-bottom: 10px;
+}
+
+#kc-totp-secret-qr-code {
+    max-width:150px;
+    max-height:150px;
+}
+
+#kc-totp-secret-key {
+    background-color: #fff;
+    color: #333333;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+/* OAuth */
+
+#kc-oauth h3 {
+    margin-top: 0;
+}
+
+#kc-oauth ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#kc-oauth ul li {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    padding: 10px 0;
+}
+
+#kc-oauth ul li:first-of-type {
+    border-top: 0;
+}
+
+#kc-oauth .kc-role {
+    display: inline-block;
+    width: 50%;
+}
+
+/* Code */
+#kc-code textarea {
+    width: 100%;
+    height: 8em;
+}
+
+/* Social */
+.kc-social-links {
+    margin-top: 20px;
+}
+
+.kc-social-provider-logo {
+    font-size: 23px;
+    width: 30px;
+    height: 25px;
+    float: left;
+}
+
+.kc-social-gray {
+    color: var(--pf-global--Color--200);
+}
+
+.kc-social-item {
+    margin-bottom: var(--pf-global--spacer--sm);
+    font-size: 15px;
+    text-align: center;
+}
+
+.kc-social-provider-name {
+    position: relative;
+    top: 3px;
+}
+
+.kc-social-icon-text {
+    left: -15px;
+}
+
+.kc-social-grid {
+    display:grid;
+    grid-column-gap: 10px;
+    grid-row-gap: 5px;
+    grid-column-end: span 6;
+    --pf-l-grid__item--GridColumnEnd: span 6;
+}
+
+.kc-social-grid .kc-social-icon-text {
+    left: -10px;
+}
+
+.kc-login-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.kc-social-section {
+    text-align: center;
+}
+
+.kc-social-section hr{
+    margin-bottom: 10px
+}
+
+.kc-login-tooltip .kc-tooltip-text{
+    top:-3px;
+    left:160%;
+    background-color: black;
+    visibility: hidden;
+    color: #fff;
+
+    min-width:130px;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow:0 1px 8px rgba(0,0,0,0.6);
+    padding: 5px;
+
+    position: absolute;
+    opacity:0;
+    transition:opacity 0.5s;
+}
+
+/* Show tooltip */
+.kc-login-tooltip:hover .kc-tooltip-text {
+    visibility: visible;
+    opacity:0.7;
+}
+
+/* Arrow for tooltip */
+.kc-login-tooltip .kc-tooltip-text::after {
+    content: " ";
+    position: absolute;
+    top: 15px;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+@media (min-width: 768px) {
+    #kc-container-wrapper {
+        position: absolute;
+        width: 100%;
+    }
+
+    .login-pf .container {
+        padding-right: 80px;
+    }
+
+    #kc-locale {
+        position: relative;
+        text-align: right;
+        z-index: 9999;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .login-pf body {
+        background: white;
+    }
+
+    #kc-header {
+        padding-left: 15px;
+        padding-right: 15px;
+        float: none;
+        text-align: left;
+    }
+
+    #kc-header-wrapper {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 20px 60px 0 0;
+        color: #72767b;
+        letter-spacing: 0;
+    }
+
+    div.kc-logo-text {
+        margin: 0;
+        width: 150px;
+        height: 32px;
+        background-size: 100%;
+    }
+
+    #kc-form {
+        float: none;
+    }
+
+    #kc-info-wrapper {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: transparent;
+    }
+
+    .login-pf .container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    #kc-locale {
+        position: absolute;
+        width: 200px;
+        top: 20px;
+        right: 20px;
+        text-align: right;
+        z-index: 9999;
+    }
+}
+
+@media (min-height: 646px) {
+    #kc-container-wrapper {
+        bottom: 12%;
+    }
+}
+
+@media (max-height: 645px) {
+    #kc-container-wrapper {
+        padding-top: 50px;
+        top: 20%;
+    }
+}
+
+.card-pf form.form-actions .btn {
+    float: right;
+    margin-left: 10px;
+}
+
+#kc-form-buttons {
+    margin-top: 20px;
+}
+
+.login-pf-page .login-pf-brand {
+    margin-top: 20px;
+    max-width: 360px;
+    width: 40%;
+}
+
+.select-auth-box-arrow{
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.select-auth-box-icon{
+    display: flex;
+    flex: 0 0 2em;
+    justify-content: center;
+    margin-right: 1rem;
+    margin-left: 3rem;
+}
+
+.select-auth-box-parent{
+    border-top: 1px solid var(--pf-global--palette--black-200);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    cursor: pointer;
+}
+
+.select-auth-box-parent:hover{
+    background-color: #f7f8f8;
+}
+
+.select-auth-container {
+    padding-bottom: 0px !important;
+}
+
+.select-auth-box-headline {
+    font-size: var(--pf-global--FontSize--md);
+    color: var(--pf-global--primary-color--100);
+    font-weight: bold;
+}
+
+.select-auth-box-desc {
+    font-size: var(--pf-global--FontSize--sm);
+}
+
+.select-auth-box-paragraph {
+    text-align: center;
+    font-size: var(--pf-global--FontSize--md);
+    margin-bottom: 5px;
+}
+
+.card-pf {
+    margin: 0 auto;
+    box-shadow: var(--pf-global--BoxShadow--lg);
+    padding: 0 20px;
+    max-width: 500px;
+    border-top: 4px solid;
+    border-color: var(--pf-global--primary-color--100);
+}
+
+/*phone*/
+@media (max-width: 767px) {
+    .login-pf-page .card-pf {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-top: 0;
+        border-top: 0;
+        box-shadow: 0 0;
+    }
+
+    .kc-social-grid {
+        grid-column-end: 12;
+        --pf-l-grid__item--GridColumnEnd: span 12;
+    }
+
+    .kc-social-grid .kc-social-icon-text {
+        left: -15px;
+    }
+}
+
+.login-pf-page .login-pf-signup {
+    font-size: 15px;
+    color: #72767b;
+}
+#kc-content-wrapper .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.login-pf-page.login-pf-page-accounts {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-pf-page .btn-primary {
+    margin-top: 0;
+}
+
+.login-pf-page .list-view-pf .list-group-item {
+    border-bottom: 1px solid #ededed;
+}
+
+.login-pf-page .list-view-pf-description {
+    width: 100%;
+}
+
+#kc-form-login div.form-group:last-of-type,
+#kc-register-form div.form-group:last-of-type,
+#kc-update-profile-form div.form-group:last-of-type,
+#kc-update-email-form div.form-group:last-of-type{
+    margin-bottom: 0px;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0;
+}
+
+#kc-back {
+    margin-top: 5px;
+}
+
+/* Recovery codes */
+.kc-recovery-codes-warning {
+    margin-bottom: 32px;
+}
+.kc-recovery-codes-warning .pf-c-alert__description p {
+    font-size: 0.875rem;
+}
+.kc-recovery-codes-list {
+    list-style: none;
+    columns: 2;
+    margin: 16px 0;
+    padding: 16px 16px 8px 16px;
+    border: 1px solid #D2D2D2;
+}
+.kc-recovery-codes-list li {
+    margin-bottom: 8px;
+    font-size: 11px;
+}
+.kc-recovery-codes-list li span {
+    color: #6A6E73;
+    width: 16px;
+    text-align: right;
+    display: inline-block;
+    margin-right: 1px;
+}
+
+.kc-recovery-codes-actions {
+    margin-bottom: 24px;
+}
+.kc-recovery-codes-actions button {
+    padding-left: 0;
+}
+.kc-recovery-codes-actions button i {
+    margin-right: 8px;
+}
+
+.kc-recovery-codes-confirmation {
+    align-items: baseline;
+    margin-bottom: 16px;
+}
+/* End Recovery codes */
+
+/* End: Original CSS copied from the following URL under the Apache License 2.0:
+   https://github.com/keycloak/keycloak/blob/21.0.2/themes/src/main/resources/theme/keycloak/login/resources/css/login.css
+*/
+
+/* Patternfly CSS places a "bg-login.jpg" as the background on this ".login-pf" class.
+   This clashes with the "keycloak-bg.png' background defined on the body below.
+   Therefore the Patternfly background must be set to none. */
+.login-pf {
+    background: none;
+}
+
+.login-pf body {
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background-image: none;
+    background-color: #EFEFEF;
+}
+
+.login-pf-page {
+    padding-top: 40px;
+}
+
+.login-pf-page #kc-header-wrapper {
+    background: transparent url('../img/pdc-logo.png') center center no-repeat;
+    background-size: contain;
+    aspect-ratio: 500/119;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0;
+    text-indent: -9999px;
+}
+
+.login-pf-page .card-pf {
+    border-top: none;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    padding-top: 20px;
+}
+
+.login-pf-page .login-pf-header h1 {
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .login-pf-page .login-pf-header h1 {
+        font-size: 1.2rem;
+    }
+}
+
+.login-pf-page .pf-c-button.pf-m-block {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+}
+
+.login-pf-page .pf-c-form__label {
+    --pf-c-form__label--FontSize: 0.85rem;
+}
+
+.login-pf-page .pf-c-form__label-text {
+    --pf-c-form__label-text--FontWeight: 400;
+}
+
+.login-pf-page .pf-c-form-control {
+    --pf-c-form-control--BorderRadius: 5px;
+    --pf-c-form-control--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--hover--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomColor: var(--pf-global--BorderColor--300);
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-form-control:focus {
+    --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
+}
+
+.login-pf-page .pf-c-button {
+    --pf-c-button--BorderRadius: 5px;
+    --pf-c-button--m-primary--BackgroundColor: #1176BC;
+    --pf-c-button--FontWeight: 600;
+}
+
+.login-pf-page .btn-lg {
+    border-radius: 5px;
+    padding: 10px;
+}
