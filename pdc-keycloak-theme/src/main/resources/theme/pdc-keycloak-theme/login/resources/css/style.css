@@ -634,7 +634,7 @@ ul#kc-totp-supported-apps {
 }
 
 .login-pf-page #kc-header-wrapper {
-    background: transparent url('https://pilot.philanthropydatacommons.org/static/media/pdc-logo.fa9b69291f8960de93e6.png') center center no-repeat;
+    background: transparent url('../img/pdc-logo.png') center center no-repeat;
     background-size: contain;
     aspect-ratio: 500/119;
     max-width: 300px;
