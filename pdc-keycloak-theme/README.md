@@ -14,6 +14,10 @@ Start in the `pdc-keycloak-theme` directory
 
 The resulting jar should be in `build/libs`. This theme jar is what should be included in keycloak's `/providers` directory.
 
+## Source Sans Pro font asset handling
+
+Font assets, including font-specific CSS, are added to the jar during the build via the `unpackSourceSansPro` task on which the `jar` task depends. There is no need to explicitly run this task but if you change the `unpackSourceSansPro` task code you may need to `../gradlew clean jar` to get up-to-date results.
+
 ## License
 
 Apache License 2.0, see the LICENSE file.

@@ -1,0 +1,3 @@
+# These should come from the build process, not commited to source control:
+*.woff
+*.woff2
