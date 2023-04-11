@@ -10,6 +10,7 @@ on:
 
 jobs:
   target_node:
+    name: Test (target node)
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code.
