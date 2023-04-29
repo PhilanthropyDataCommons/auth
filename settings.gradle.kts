@@ -10,3 +10,4 @@
 rootProject.name = "auth"
 include("twilio-keycloak-provider")
 include("pdc-keycloak-theme")
+include("keycloak-required-action")
