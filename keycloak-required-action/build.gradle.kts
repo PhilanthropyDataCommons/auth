@@ -13,9 +13,10 @@ java {
   }
 }
 
-// We target the class version of the JRE used in the keycloak container: 11.
+
+// We target the version of the JRE currently used by Keycloak: 17.
 tasks.compileJava {
-  options.release.set(11)
+  options.release.set(17)
 }
 
 repositories {
@@ -23,7 +24,7 @@ repositories {
 }
 
 ext {
-  set("keycloakVersion", "20.0.5")
+  set("keycloakVersion", "22.0.1")
 }
 
 dependencies {
