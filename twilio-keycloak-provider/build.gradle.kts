@@ -11,7 +11,7 @@ plugins {
     // keycloak classpath with a single jar. The alternative would be to copy/include each jar
     // and dependent jars onto the keycloak classpath. See exclusions below because there is some
     // overlap in the twilio and keycloak dependencies.
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 // We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
@@ -42,17 +42,17 @@ dependencies {
     compileOnly("org.keycloak:keycloak-server-spi:${project.ext.get("keycloakVersion")}")
     compileOnly("org.keycloak:keycloak-server-spi-private:${project.ext.get("keycloakVersion")}")
     compileOnly("org.keycloak:keycloak-services:${project.ext.get("keycloakVersion")}")
-    compileOnly("com.github.dasniko:keycloak-spi-bom:20.0.0")
+    compileOnly("com.github.dasniko:keycloak-spi-bom:22.0.0")
     // Twilio's dependencies are used by our extension but not intended to be further exposed.
     // The shadow plugin jar (shadowJar task) will include this and its dependencies.
-    implementation("com.twilio.sdk:twilio:9.2.3")
+    implementation("com.twilio.sdk:twilio:9.12.0")
 
     // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     // In keycloak, slf4j is bridged to jboss-logging. For test runtime here use slf4j-simple.
-    testImplementation("org.slf4j:slf4j-simple:2.0.6")
+    testImplementation("org.slf4j:slf4j-simple:2.0.9")
     // To create mock instances
-    testImplementation("org.mockito:mockito-junit-jupiter:5.1.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.5.0")
     testImplementation("org.keycloak:keycloak-core:${project.ext.get("keycloakVersion")}")
     testImplementation("org.keycloak:keycloak-server-spi-private:${project.ext.get("keycloakVersion")}")
     testImplementation("org.keycloak:keycloak-server-spi:${project.ext.get("keycloakVersion")}")
