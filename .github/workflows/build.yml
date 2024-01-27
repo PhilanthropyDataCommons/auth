@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  target_node:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code.
@@ -19,6 +19,12 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-      - name: Build a shaded fat jar.
+      - name: Build a shaded fat jar for Twilio integration.
         working-directory: twilio-keycloak-provider
         run: ../gradlew shadowJar
+      - name: Build the RequiredAction jar.
+        working-directory: keycloak-required-action
+        run: ../gradlew jar
+      - name: Build the Keycloak theme jar.
+        working-directory: pdc-keycloak-theme
+        run: ../gradlew jar
