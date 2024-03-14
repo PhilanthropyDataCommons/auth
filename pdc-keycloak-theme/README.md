@@ -14,6 +14,37 @@ Start in the `pdc-keycloak-theme` directory
 
 The resulting jar should be in `build/libs`. This theme jar is what should be included in keycloak's `/providers` directory.
 
+If deploying this jar, you should rename it based on the git commit. Example:
+- `cp build/libs/pdc-keycloak-theme.jar pdc-keycloak-theme-20240313-05793e4.jar`
+
+The version id here is the UTC date of the commit in YYYMMDD format followed by a hyphen and the first seven digits of the commit SHA1 sum. There may be commits that are on one day in one part of the world but another day in another part of the world, hence the use of the UTC zone of the commit date.
+
+## How to deploy
+
+If there is already a `pdc-keycloak-theme...jar` present in the Keycloak `providers` directory, move this one out when deploying a new one. The goal is to have exactly one version of this jar present on the classpath.
+
+Example commands that copied a new jar, moved the old jar, and chowned the new:
+
+- `sudo cp pdc-keycloak-theme-20240313-05793e4.jar /opt/keycloak/keycloak-23.0.5/providers/`
+- `sudo mv /opt/keycloak/keycloak-23.0.5/providers/pdc-keycloak-theme-20230407-6b4b74d.jar /opt/keycloak/`
+- `sudo chown keycloak:keycloak /opt/keycloak/keycloak-23.0.5/providers/pdc-keycloak-theme*.jar`
+
+Rebuild Keycloak's configuration. Example:
+
+- `sudo -u keycloak /bin/bash`
+- `cd /opt/keycloak/keycloak-23.0.5`
+- `bin/kc.sh build`
+- `exit`
+- `sudo systemctl restart keycloak`
+
+To verify that everything is OK, look at the logs. Example:
+
+- `sudo journalctl --since '2024-03-13 00:00:00' | grep -C 5 -i keycloak`
+
+### Deployment tip regarding Keycloak authentication workflow interface
+
+If you are changing authentication workflows, start in your development environment or the test environment to safely figure them out. When making the same change in production, avoid trying to copy and paste text from the test environment UI pages to the production environment UI pages because the workflow can be altered with drag-and-drop.
+
 ## Source Sans Pro font asset handling
 
 Font assets, including font-specific CSS, are added to the jar during the build via the `unpackSourceSansPro` task on which the `jar` task depends. There is no need to explicitly run this task but if you change the `unpackSourceSansPro` task code you may need to `../gradlew clean jar` to get up-to-date results.
