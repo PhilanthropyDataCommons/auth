@@ -24,7 +24,7 @@ repositories {
 
 // Declare dependency on a font package so that we can include font resources.
 dependencies {
-    implementation("org.webjars.npm:fontsource__source-sans-pro:4.5.11")
+    implementation("org.webjars.npm:fontsource__source-sans-pro:5.2.5")
 }
 
 // Create a task that will unpack just the .woff and .woff2 files of one font.
