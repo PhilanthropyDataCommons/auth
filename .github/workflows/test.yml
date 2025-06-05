@@ -21,4 +21,4 @@ jobs:
           java-version: '17'
       - name: Run tests and code coverage report.
         working-directory: twilio-keycloak-provider
-        run: ../gradlew test jacocoReport
+        run: ../gradlew test jacocoReport || grep -A 100 -i failed build/reports/tests/test/classes/*html
