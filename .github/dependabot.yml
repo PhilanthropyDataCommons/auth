@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: 'gradle'
+    directories:
+      - 'pdc-keycloak-theme'
+      - 'twilio-keycloak-provider'
+      - 'keycloak-required-action'
+    schedule:
+      interval: 'daily'
+  - package-ecosystem: 'github-actions'
+    directory: '.github/workflows'
+    schedule:
+      interval: 'daily'
