@@ -7,6 +7,11 @@ updates:
       - 'keycloak-required-action'
     schedule:
       interval: 'daily'
+    groups:
+      junit-jupiter:
+        patterns:
+          - 'org.junit.*'
+          - 'org.mockito.*jupiter*'
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
     schedule:
