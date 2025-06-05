@@ -52,7 +52,7 @@ dependencies {
     // In keycloak, slf4j is bridged to jboss-logging. For test runtime here use slf4j-simple.
     testImplementation("org.slf4j:slf4j-simple:2.0.17")
     // To create mock instances
-    testImplementation("org.mockito:mockito-junit-jupiter:5.5.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
     testImplementation("org.keycloak:keycloak-core:${project.ext.get("keycloakVersion")}")
     testImplementation("org.keycloak:keycloak-server-spi-private:${project.ext.get("keycloakVersion")}")
     testImplementation("org.keycloak:keycloak-server-spi:${project.ext.get("keycloakVersion")}")
