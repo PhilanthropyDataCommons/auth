@@ -48,7 +48,7 @@ dependencies {
     implementation("com.twilio.sdk:twilio:9.12.0")
 
     // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.13.0")
     // In keycloak, slf4j is bridged to jboss-logging. For test runtime here use slf4j-simple.
     testImplementation("org.slf4j:slf4j-simple:2.0.17")
     // To create mock instances
