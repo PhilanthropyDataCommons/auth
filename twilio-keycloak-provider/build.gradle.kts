@@ -31,7 +31,7 @@ repositories {
 }
 
 ext {
-    set("keycloakVersion", "22.0.1");
+    set("keycloakVersion", "26.2.5");
 }
 
 dependencies {
@@ -45,7 +45,7 @@ dependencies {
     compileOnly("com.github.dasniko:keycloak-spi-bom:26.2.1")
     // Twilio's dependencies are used by our extension but not intended to be further exposed.
     // The shadow plugin jar (shadowJar task) will include this and its dependencies.
-    implementation("com.twilio.sdk:twilio:9.12.0")
+    implementation("com.twilio.sdk:twilio:10.9.1")
 
     // Use JUnit Jupiter for testing.
     testRuntimeOnly("org.junit.platform:junit-platform-engine:1.13.0")
@@ -90,6 +90,12 @@ tasks.shadowJar {
         // Woodstox is not in keycloak deps, but other implementations of the same SPIs are.
         exclude(dependency("org.codehaus.woodstox:stax2-api:.*"))
         exclude(dependency("org.slf4j:.*:.*"))
+        // These are not directly referenced by Twilio code.
+        exclude(dependency("ch.randelshofer:.*:.*"))
+        // Auth0 code is for fancier use cases than ours.
+        exclude(dependency("com.auth0:.*:.*"))
+        // Google GSON is already in Keycloak.
+        exclude(dependency("com.google.code.gson:gson:.*"))
     }
 
     // To avoid classpath conflicts, relocate the remaining twilio dependencies:
