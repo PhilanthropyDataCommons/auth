@@ -42,7 +42,7 @@ dependencies {
     compileOnly("org.keycloak:keycloak-server-spi:${project.ext.get("keycloakVersion")}")
     compileOnly("org.keycloak:keycloak-server-spi-private:${project.ext.get("keycloakVersion")}")
     compileOnly("org.keycloak:keycloak-services:${project.ext.get("keycloakVersion")}")
-    compileOnly("com.github.dasniko:keycloak-spi-bom:22.0.0")
+    compileOnly("com.github.dasniko:keycloak-spi-bom:26.2.1")
     // Twilio's dependencies are used by our extension but not intended to be further exposed.
     // The shadow plugin jar (shadowJar task) will include this and its dependencies.
     implementation("com.twilio.sdk:twilio:9.12.0")
