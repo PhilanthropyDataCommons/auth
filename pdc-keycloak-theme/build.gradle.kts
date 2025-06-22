@@ -43,7 +43,7 @@ tasks.register<Copy>("unpackSourceSansPro") {
         }
         includeEmptyDirs = false
     }
-    into(layout.buildDirectory.dir("resources/main/theme/pdc-keycloak-theme/login/resources/fonts"))
+    into(layout.buildDirectory.dir("resources/main/theme/pdc-keycloak-theme/common/resources/fonts"))
 }
 
 // Make sure that the font unpacking task runs before the jar task.
