@@ -1,6 +1,6 @@
 {
     "themes": [{
         "name" : "pdc-keycloak-theme",
-        "types": [ "common", "email", "login" ]
+        "types": [ "account", "admin", "common", "email", "login" ]
     }]
 }
