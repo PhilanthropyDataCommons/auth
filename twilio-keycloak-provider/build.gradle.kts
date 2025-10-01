@@ -102,6 +102,9 @@ tasks.shadowJar {
     relocate("com.twilio", "org.philanthropydatacommons.shadow.com.twilio")
     relocate("org.json", "org.philanthropydatacommons.shadow.org.json")
     relocate("io.jsonwebtoken", "org.philanthropydatacommons.shadow.io.jsonwebtoken")
+    relocate("org.apache.hc.core5", "org.philanthropydatacommons.shadow.org.apache.hc.core5")
+    relocate("org.apache.hc.client5", "org.philanthropydatacommons.shadow.org.apache.hc.client5")
+    relocate("org.publicsuffix", "org.philanthropydatacommons.shadow.org.publicsuffix")
 
     // The mergeServiceFiles also relocates the SPI definitions in META-INF/services
     mergeServiceFiles()
