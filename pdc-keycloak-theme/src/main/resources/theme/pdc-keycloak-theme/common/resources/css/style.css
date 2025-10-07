@@ -1,5 +1,36 @@
 :root {
+    --pdc-font-color: #151515;
+    --pdc-page-background-color: #EFEFEF;
+    --pdc-element-background-color: #FFFFFF;
+    --pdc-element-hover-background-color: #DDDDDD;
+    --pdc-element-hover-color: var(--pdc-font-color);
     --pf-global--spacer--form-element: 0.5rem;
+    --pf-v5-global--BackgroundColor: var(--pdc-page-background-color);
+    --pf-v5-c-button--m-plain--BackgroundColor: var(--pdc-element-background-color);
+    --pf-v5-c-nav__link--BackgroundColor: var(--pdc-element-background-color);
+    --pf-v5-c-page__header--BackgroundColor: var(--pdc-page-background-color);
+    --pf-v5-c-page__sidebar--BackgroundColor: var(--pdc-page-background-color);
+    --pf-v5-c-page--BackgroundColor: var(--pdc-page-background-color);
+    --pf-v5-global--BackgroundColor--dark-100: var(--pdc-page-background-color);
+    --pf-v5-global--Color: var(--pdc-font-color);
+    --pf-v5-global--Color--100: var(--pdc-font-color);
+    --pf-v5-global--Color--200: var(--pdc-font-color);
+    --pf-v5-global--Color--300: var(--pdc-font-color);
+    --pf-v5-global--Color--400: var(--pdc-font-color);
+    --pf-v5-global--Color--dark: var(--pdc-font-color);
+    --pf-v5-global--Color--dark-100: var(--pdc-font-color);
+    --pf-v5-global--Color--dark-200: var(--pdc-font-color);
+    --pf-v5-global--Color--dark-300: var(--pdc-font-color);
+    --pf-v5-global--Color--dark-400: var(--pdc-font-color);
+    --pf-v5-c-nav__section-title--Color: var(--pdc-font-color);
+    --pf-v5-c-nav__link--Color: var(--pdc-font-color);
+    --pf-v5-c-nav__link--BackgroundColor: var(--pdc-font-color);
+    --pf-v5-c-nav__link--m-current--BackgroundColor: var(--pdc-element-hover-background-color);
+    --pf-v5-c-nav--c-menu__list-item--hover--BackgroundColor: var(--pdc-element-hover-background-color);
+    --pf-v5-c-nav--c-menu__list-item--hover--Color: var(--pdc-element-hover-background-color);
+    --pf-v5-c-nav--m-horizontal-subnav__link--hover--BackgroundColor: var(--pdc-element-hover-background-color);
+    --pf-v5-c-nav--m-horizontal-subnav__link--hover--Color: var(--pdc-element-hover-color);
+    --pf-v5-c-menu-toggle--Color: var(--pdc-element-hover-background-color);
 }
 
 /* Begin: Original CSS copied from the following URL under the Apache License 2.0:
@@ -601,18 +632,18 @@ ul#kc-totp-supported-apps {
     background: none;
 }
 
-.login-pf body {
+.login-pf body, body, .pf-v5-c-modal-box__title {
     font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     background-image: none;
-    background-color: #EFEFEF;
+    background-color: var(--pdc-page-background-color);
 }
 
-.login-pf-page {
+.login-pf .login-pf-page, pf-v5-c-page, .login-pf-page {
     padding-top: 40px;
 }
 
-.login-pf-page #kc-header-wrapper {
-    background: transparent url('../img/pdc-logo.png') center center no-repeat;
+#kc-header-wrapper, .login-pf-page #kc-header-wrapper, header .pf-v5-c-masthead__brand {
+    background: transparent url('../img/keycloak-logo-text.png') center center no-repeat;
     background-size: contain;
     aspect-ratio: 500/119;
     max-width: 300px;
@@ -621,38 +652,42 @@ ul#kc-totp-supported-apps {
     text-indent: -9999px;
 }
 
-.login-pf-page .card-pf {
+header .pf-v5-c-masthead__brand img {
+    opacity: 0;
+}
+
+.pf-login .card-pf, .card-pf {
     border-top: none;
     border-radius: 5px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
     padding-top: 20px;
 }
 
-.login-pf-page .login-pf-header h1 {
+.pf-login h1, h1, .login-pf-page .login-pf-header h1 {
     font-weight: 600;
 }
 
-@media (min-width: 768px) {
-    .login-pf-page .login-pf-header h1 {
+.pf-login @media (min-width: 768px), .pf-login @media (min-width: 768px) {
+    h1 {
         font-size: 1.2rem;
     }
 }
 
-.login-pf-page .pf-c-button.pf-m-block {
+.pf-login .pf-c-button.pf-m-block, .pf-c-button.pf-m-block {
     display: inline-block;
     width: auto;
     padding: 10px 20px;
 }
 
-.login-pf-page .pf-c-form__label {
+.pf-login .pf-c-form__label, .pf-c-form__label {
     --pf-c-form__label--FontSize: 0.85rem;
 }
 
-.login-pf-page .pf-c-form__label-text {
+.pf-login .pf-c-form__label-text, .pf-c-form__label-text {
     --pf-c-form__label-text--FontWeight: 400;
 }
 
-.login-pf-page .pf-c-form-control {
+.pf-login .pf-c-form-control, .pf-c-form-control {
     --pf-c-form-control--BorderRadius: 5px;
     --pf-c-form-control--BorderBottomColor: var(--pf-global--BorderColor--300);
     --pf-c-form-control--hover--BorderBottomColor: var(--pf-global--BorderColor--300);
@@ -660,17 +695,49 @@ ul#kc-totp-supported-apps {
     --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
 }
 
-.login-pf-page .pf-c-form-control:focus {
+.pf-login .pf-c-form-control:focus, .pf-c-form-control:focus {
     --pf-c-form-control--focus--BorderBottomWidth: var(--pf-global--BorderWidth--sm);
 }
 
-.login-pf-page .pf-c-button {
+.pf-login .pf-c-button, .pf-c-button {
     --pf-c-button--BorderRadius: 5px;
     --pf-c-button--m-primary--BackgroundColor: #1176BC;
     --pf-c-button--FontWeight: 600;
 }
 
-.login-pf-page .btn-lg {
+.btn-lg, .pf-login .btn-lg {
     border-radius: 5px;
     padding: 10px;
+}
+
+
+body, .pf-login body, .keycloak__loading-container {
+    color: var(--pdc-font-color);
+    background-color: var(--pdc-page-background-color);
+}
+
+
+.pf-v5-c-tabs__item-text, .pf-v5-c-nav__link.pf-m-current, h1, h2, h3, h4, h5, h6, h7, section, sidebar, nav, span, ul, ol, li, a, th, td, header, footer, main, .pf-v5-c-nav__link, #account, .pf-v5-c-nav__toggle, span .pf-v5-c-nav__toggle {
+    color: var(--pdc-font-color);
+    background-color: var(--pdc-page-element-background-color);
+}
+
+html body div div.pf-v5-c-page.pf-m-resize-observer.pf-m-breakpoint-xl.pf-m-height-breakpoint-2xl div .pf-v5-c-page__sidebar.pf-m-expanded div.pf-v5-c-page__sidebar-body nav.pf-v5-c-nav ul.pf-v5-c-nav__list li.pf-v5-c-nav__item.pf-m-expandable button .pf-v5-c-nav__link {
+    color: var(--pdc-font-color);
+    background-color: var(--pdc-page-element-background-color);
+}
+
+html body div div div nav ul li a .pf-v5-c-nav__link {
+    color: var(--pdc-font-color);
+    background-color: var(--pdc-background-color);
+}
+
+div.pf-v5-c-page__sidebar-body nav.pf-v5-c-nav ul.pf-v5-c-nav__list li.pf-v5-c-nav__item a.pf-v5-c-nav__link {
+    background-color: var(--pdc-background-color);
+    color: var(--pdc-font-color);
+}
+
+div div__sidebar-body nav.pf-v5-c-nav ul.pf-v5-c-nav__list li.pf-v5-c-nav__item.pf-m-expandable button.pf-v5-c-nav__link {
+    background-color: var(--pdc-background-color);
+    color: var(--pdc-font-color);
 }
