@@ -11,7 +11,7 @@ plugins {
     // keycloak classpath with a single jar. The alternative would be to copy/include each jar
     // and dependent jars onto the keycloak classpath. See exclusions below because there is some
     // overlap in the twilio and keycloak dependencies.
-    id("com.gradleup.shadow") version "9.2.2"
+    id("com.gradleup.shadow") version "9.3.0"
 }
 
 // We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
