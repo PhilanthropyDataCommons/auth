@@ -52,7 +52,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.3")
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
     // In keycloak, slf4j is bridged to jboss-logging. For test runtime here use slf4j-simple.
-    testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation("org.slf4j:slf4j-simple:2.0.18")
     // To create mock instances
     testImplementation("org.mockito:mockito-junit-jupiter:5.23.0")
     testImplementation("org.keycloak:keycloak-core:${project.ext.get("keycloakVersion")}")
