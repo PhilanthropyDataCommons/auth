@@ -45,7 +45,7 @@ dependencies {
     compileOnly("com.github.dasniko:keycloak-spi-bom:26.6.1")
     // Twilio's dependencies are used by our extension but not intended to be further exposed.
     // The shadow plugin jar (shadowJar task) will include this and its dependencies.
-    implementation("com.twilio.sdk:twilio:11.3.4")
+    implementation("com.twilio.sdk:twilio:12.1.1")
 
     // Use JUnit Jupiter for testing.
     testRuntimeOnly("org.junit.platform:junit-platform-engine:6.0.3")
