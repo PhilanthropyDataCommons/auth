@@ -1,0 +1,11 @@
+name: Add to project
+
+on:
+  issues:
+    types: [opened, transferred, reopened]
+
+jobs:
+  add-to-project:
+    uses: PhilanthropyDataCommons/.github/.github/workflows/add-to-project.yml@v1
+    secrets:
+      PDC_BOT_PRIVATE_KEY: ${{ secrets.PDC_BOT_PRIVATE_KEY }}
