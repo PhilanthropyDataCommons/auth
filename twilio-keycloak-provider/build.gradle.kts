@@ -48,9 +48,9 @@ dependencies {
     implementation("com.twilio.sdk:twilio:11.3.4")
 
     // Use JUnit Jupiter for testing.
-    testRuntimeOnly("org.junit.platform:junit-platform-engine:6.0.3")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.3")
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:6.1.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.1")
     // In keycloak, slf4j is bridged to jboss-logging. For test runtime here use slf4j-simple.
     testImplementation("org.slf4j:slf4j-simple:2.0.18")
     // To create mock instances
