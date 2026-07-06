@@ -9,7 +9,7 @@ plugins {
 // We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
 java {
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(17))
+    languageVersion.set(JavaLanguageVersion.of(25))
   }
 }
 
@@ -24,7 +24,7 @@ repositories {
 }
 
 ext {
-  set("keycloakVersion", "22.0.1")
+  set("keycloakVersion", "26.6.4")
 }
 
 dependencies {

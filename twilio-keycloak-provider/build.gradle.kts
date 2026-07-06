@@ -14,10 +14,10 @@ plugins {
     id("com.gradleup.shadow") version "9.2.2"
 }
 
-// We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
+// We expect the current LTS version of the JDK for IDEs, compilation, etc.: 25.
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
@@ -31,7 +31,7 @@ repositories {
 }
 
 ext {
-    set("keycloakVersion", "26.2.5");
+    set("keycloakVersion", "26.6.4");
 }
 
 dependencies {
