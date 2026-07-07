@@ -6,16 +6,16 @@ plugins {
     `java-library`
 }
 
-// We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
+// We expect the current LTS version of the JDK for IDEs, compilation, etc.: 25.
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 
 // We target the class version of the JRE used in the keycloak container: 11.
 tasks.compileJava {
-    options.release.set(11)
+    options.release.set(17)
 }
 
 repositories {
