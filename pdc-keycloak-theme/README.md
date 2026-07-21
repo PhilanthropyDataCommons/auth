@@ -49,6 +49,57 @@ If you are changing authentication workflows, start in your development environm
 
 Font assets, including font-specific CSS, are added to the jar during the build via the `unpackSourceSansPro` task on which the `jar` task depends. There is no need to explicitly run this task but if you change the `unpackSourceSansPro` task code you may need to `../gradlew clean jar` to get up-to-date results.
 
+## Maintenance notice theme (pdc-keycloak-theme-notice)
+
+This jar also ships a second, thin login theme called `pdc-keycloak-theme-notice`
+that extends `pdc-keycloak-theme` and adds a maintenance/upgrade notice banner to
+the bottom of every login page. It uses the Custom Footer hook introduced in
+Keycloak 26.0.0, so it does not override `template.ftl` and is safe across
+Keycloak upgrades.
+
+### How to show the notice
+
+1. Build and deploy this jar (see above) so both themes are on the classpath.
+2. In the Admin Console, go to **Realm Settings → Themes → Login Theme** and
+   select **`pdc-keycloak-theme-notice`**, then **Save**.
+
+The notice appears immediately — no restart is needed to switch themes.
+
+### How to hide the notice
+
+Switch the Login Theme back to **`pdc-keycloak-theme`** and **Save**. No restart
+and no file changes are required.
+
+### How to change the notice text (no file edits, no restart)
+
+The notice text is the message key `maintenanceNotice` (with a default in
+`theme/pdc-keycloak-theme-notice/login/messages/messages_en.properties`). The
+default is intentionally **generic and placeholder-free** ("Scheduled maintenance
+may briefly interrupt access to this service...") so that if the notice theme
+is enabled before the text is customized, users see a sensible message rather
+than something like "YYYY-MM-DD between HH:MM and HH:MM".
+
+To set the actual maintenance window at runtime:
+
+1. Go to **Realm Settings → Localization**.
+2. Enable internationalization if it isn't already (you can keep `en` as the
+   only supported locale — users won't see anything different).
+3. Open the **Realm Overrides** tab.
+4. Add/edit the key `maintenanceNotice` for locale `en` and set your text.
+5. Save.
+
+Realm Overrides are stored in the database and take effect immediately. The
+value may contain a safe subset of HTML (passed through Keycloak's `kcSanitize`):
+`<strong>`, `<a href>`, `<br>`, `<p>`, `<em>`, `<b>`, `<ul>/<li>`, etc.
+
+Example override (replace the placeholders with your actual window):
+
+```
+<strong>Upgrade notice:</strong> Keycloak will be unavailable on
+<strong>YYYY-MM-DD</strong> from <strong>HH:MM</strong> to <strong>HH:MM</strong> UTC.
+See <a href="https://status.example.com/">status.example.com</a> for details.
+```
+
 ## License
 
 Apache License 2.0, see the LICENSE file.

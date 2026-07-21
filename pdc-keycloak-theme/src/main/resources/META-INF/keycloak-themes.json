@@ -2,5 +2,8 @@
     "themes": [{
         "name" : "pdc-keycloak-theme",
         "types": [ "account", "admin", "common", "email", "login" ]
+    }, {
+        "name" : "pdc-keycloak-theme-notice",
+        "types": [ "login" ]
     }]
 }
