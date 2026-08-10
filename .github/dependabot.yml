@@ -12,6 +12,9 @@ updates:
         patterns:
           - 'org.junit.*'
           - 'org.mockito.*jupiter*'
+      keycloak:
+        patterns:
+          - 'org.keycloak:*'
   - package-ecosystem: 'github-actions'
     directory: '.github/workflows'
     schedule:
