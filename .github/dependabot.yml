@@ -8,10 +8,10 @@ updates:
     schedule:
       interval: 'daily'
     groups:
-      junit-jupiter:
+      junit-and-mockito:
         patterns:
           - 'org.junit.*'
-          - 'org.mockito.*jupiter*'
+          - 'org.mockito:*'
       keycloak:
         patterns:
           - 'org.keycloak:*'
