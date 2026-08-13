@@ -23,13 +23,9 @@ repositories {
   mavenCentral()
 }
 
-ext {
-  set("keycloakVersion", "26.6.4")
-}
-
 dependencies {
-  compileOnly("org.keycloak:keycloak-core:${project.ext.get("keycloakVersion")}")
-  compileOnly("org.keycloak:keycloak-server-spi:${project.ext.get("keycloakVersion")}")
-  compileOnly("org.keycloak:keycloak-server-spi-private:${project.ext.get("keycloakVersion")}")
-  compileOnly("org.keycloak:keycloak-services:${project.ext.get("keycloakVersion")}")
+  compileOnly("org.keycloak:keycloak-core:26.7.1")
+  compileOnly("org.keycloak:keycloak-server-spi:26.7.1")
+  compileOnly("org.keycloak:keycloak-server-spi-private:26.7.1")
+  compileOnly("org.keycloak:keycloak-services:26.7.1")
 }
