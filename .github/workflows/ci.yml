@@ -1,5 +1,8 @@
-name: Build
+name: CI
 
+# Consolidated build and test workflow. This combines the former build.yml and
+# test.yml into a single file. The jobs and their steps are unchanged from
+# those files; a later commit adds versioning and publishing. GLM-5.2
 on:
   push:
     branches:
@@ -28,3 +31,17 @@ jobs:
       - name: Build the Keycloak theme jar.
         working-directory: pdc-keycloak-theme
         run: ../gradlew jar
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v7
+      - name: Get Zulu OpenJDK (current LTS version)
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Run tests and code coverage report.
+        working-directory: twilio-keycloak-provider
+        run: ../gradlew test jacocoReport || grep -A 100 -i failed build/reports/tests/test/classes/*html
