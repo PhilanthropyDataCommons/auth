@@ -5,6 +5,7 @@
 plugins {
     `java-library`
     id("pdc-versioning")
+    id("pdc-publishing")
     // Test coverage
     jacoco
     // The shadow plugin can create "fat" and/or "shaded" jars, i.e. include dependencies in the
