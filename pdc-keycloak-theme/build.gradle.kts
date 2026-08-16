@@ -4,6 +4,7 @@
  */
 plugins {
     `java-library`
+    id("pdc-versioning")
 }
 
 // We expect the current LTS version of the JDK for IDEs, compilation, etc.: 25.
