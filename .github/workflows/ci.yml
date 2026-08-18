@@ -1,0 +1,390 @@
+name: CI
+
+# Build, test, and (on merge to main) publish the Keycloak extension jars to
+# GitHub Packages and to GitHub Releases. Each jar is versioned independently
+# by the `pdc-versioning` Gradle convention plugin (in buildSrc/) from the
+# most recent commit that touched either shared build infrastructure
+# (everything outside the component subdirectories -- repo-root files plus
+# .github, gradle, buildSrc, and any future top-level directory) or that jar's
+# own subdirectory, whichever is later: the UTC committer date in YYYYMMDD
+# format plus the first seven characters of the commit SHA1, e.g.
+# `20260816-a33ec28`. See `README.md` for the canonical
+# description of this scheme. A jar whose GAV is already in the registry is
+# not re-uploaded; its canonical bytes are downloaded from the registry into
+# the release assets so every release asset is byte-identical to the canonical
+# jar. One GitHub Release per merge commit to main (tagged with that merge
+# commit's <YYYYMMDD-utc>-<sha7>, the same format as a per-jar version but
+# computed from the merge commit) carries every jar current at that merge
+# commit as an asset, each with its own per-jar version in its filename.
+# GLM-5.2
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code (full history for per-jar versioning).
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Get Zulu OpenJDK (current LTS version).
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Build a shaded fat jar for Twilio integration.
+        working-directory: twilio-keycloak-provider
+        run: ../gradlew shadowJar
+      - name: Build the RequiredAction jar.
+        working-directory: keycloak-required-action
+        run: ../gradlew jar
+      - name: Build the Keycloak theme jar.
+        working-directory: pdc-keycloak-theme
+        run: ../gradlew jar
+      - name: Stage jars for release.
+        run: |
+          mkdir -p stage
+          # The jars are built with their per-jar version in the filename by
+          # the pdc-versioning convention plugin, e.g.
+          # pdc-keycloak-theme-20260816-a33ec28.jar. The fat (shadow) jar is the
+          # unqualified twilio-keycloak-provider-<version>.jar; the -plain jar
+          # is not deployed/published. GLM-5.2
+          cp twilio-keycloak-provider/build/libs/twilio-keycloak-provider-*.jar stage/
+          rm -f stage/twilio-keycloak-provider-*-plain.jar
+          cp keycloak-required-action/build/libs/keycloak-required-action-*.jar stage/
+          cp pdc-keycloak-theme/build/libs/pdc-keycloak-theme-*.jar stage/
+          ls -la stage/
+      - name: Upload built jars for release.
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-jars
+          path: |
+            stage/*.jar
+          if-no-files-found: error
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v7
+      - name: Get Zulu OpenJDK (current LTS version)
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Run tests and code coverage report.
+        working-directory: twilio-keycloak-provider
+        # Run the tests and generate coverage. On failure, print the failing
+        # test HTML report for diagnostics, but preserve the nonzero exit
+        # status so the job (and thus any dependent job) fails -- a bare
+        # `|| grep ...` would mask the failure because a successful grep
+        # returns 0. GLM-5.2
+        run: |
+          set +e
+          ../gradlew test jacocoReport
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            grep -A 100 -i failed build/reports/tests/test/classes/*html || true
+          fi
+          exit "$status"
+
+  release:
+    needs: [build, test]
+    # Publication only happens on a merge to main (a push to main) or on a
+    # manual workflow_dispatch rerun -- never on individual pull requests.
+    # GLM-5.2
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    concurrency:
+      # One release per merge commit, so isolate concurrency by commit, not
+      # repo-wide: GitHub Actions keeps at most one *pending* run per group, so
+      # a repo-wide `group: release` would let a third merge replace a queued
+      # release (breaking the one-release-per-merge promise). Per-commit groups
+      # let concurrent merges each release; the registry recheck in the publish
+      # step already handles cross-commit GAV races (an unchanged jar is just
+      # re-GET'd, and the existing release for that SHA is re-uploaded into).
+      # GLM-5.2
+      group: release-${{ github.sha }}
+      cancel-in-progress: false
+    steps:
+      - name: Check out repository code (full history for per-jar versioning).
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Get Zulu OpenJDK (current LTS version).
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Download built jars.
+        uses: actions/download-artifact@v4
+        with:
+          name: built-jars
+          path: stage
+      - name: Publish changed jars to GitHub Packages (Maven).
+        # pdc-versioning computes each jar's version from git; pdc-publishing
+        # wires maven-publish to GitHub Packages (components["shadow"] for the
+        # fat twilio jar, components["java"] for the plain jars). Before each
+        # upload, HEAD the registry's .pom URL and skip GAVs that already exist
+        # (so unchanged jars are not re-uploaded). A concurrent publish racing
+        # for the same new GAV yields a 409 from the registry, tolerated as
+        # "already published". pdc-publishing records what it uploaded to
+        # build/published.txt as "<module>=<version>|<jar path>" lines.
+        # GLM-5.2
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          set -o pipefail
+          # pipefail so a failed `./gradlew ... | tail | cut` aborts the step
+          # instead of being masked by the trailing `cut`'s success -- a failed
+          # printVersion would otherwise leave an empty/garbage version, probe
+          # the wrong GAV, and misclassify a subsequent publish. GLM-5.2
+          # The release job never runs gradle until the publish loop below, so
+          # build/ does not exist yet in this workspace (only stage/ does, from
+          # the artifact download). Create build/ before redirecting into
+          # build/published.txt and build/publish_failed_status below, else the
+          # first `: > build/published.txt` would abort the step under `set -e`.
+          # GLM-5.2
+          mkdir -p build
+          # Start from an empty file so the `done < build/published.txt` loop
+          # below works even when no publish task runs (every GAV already
+          # existed); `rm -f` would leave it absent and the redirection would
+          # fail under `set -e` before the "No new jars" branch. GLM-5.2
+          : > build/published.txt
+          group_path="org/philanthropydatacommons"
+          registry_base="https://maven.pkg.github.com/PhilanthropyDataCommons/auth"
+          auth="$(printf '%s:%s' "$GITHUB_ACTOR" "$GITHUB_TOKEN" | base64 -w0)"
+          # Download the canonical POM and JAR for a GAV from the registry into temp
+          # files in stage/ and move them over the staged files only on a
+          # successful GET of BOTH. A Maven publish uploads multiple files
+          # (POM + JAR + checksums); probing only the JAR would treat a partial
+          # publish (JAR present, POM absent) as complete, recording the GAV as
+          # published and never repairing it. Requiring both proves the
+          # publication fully landed. A direct `curl -o "$staged"` would also
+          # truncate the freshly-built staged jar on the expected 404 for a new
+          # GAV (or a transfer error); the temp file avoids that. GLM-5.2
+          download_canonical() {
+            local module="$1" version="$2" base="$3" group_path="$4"
+            local jar_url="${base}/${group_path}/${module}/${version}/${module}-${version}.jar"
+            local pom_url="${base}/${group_path}/${module}/${version}/${module}-${version}.pom"
+            local dest="stage/${module}-${version}.jar"
+            local pom_tmp jar_tmp
+            pom_tmp="$(mktemp -p stage)"
+            jar_tmp="$(mktemp -p stage)"
+            if curl -fsS -o "$pom_tmp" -H "Authorization: Basic ${auth}" "$pom_url" \
+               && curl -fsS -o "$jar_tmp" -H "Authorization: Basic ${auth}" "$jar_url"; then
+              mv -f "$jar_tmp" "$dest"
+              rm -f "$pom_tmp"
+              return 0
+            fi
+            rm -f "$pom_tmp" "$jar_tmp"
+            return 1
+          }
+          for module in twilio-keycloak-provider keycloak-required-action pdc-keycloak-theme; do
+            version="$(./gradlew :${module}:printVersion --no-daemon -q | tail -1 | cut -d= -f2)"
+            # printVersion falls back to 0.0.0-SNAPSHOT when git is unavailable
+            # or no commit matches. Publishing that fallback coordinate would
+            # stamp a transient shared SNAPSHOT into the registry as if it were
+            # an official release, so refuse to publish it. GLM-5.2
+            if [ "$version" = "0.0.0-SNAPSHOT" ]; then
+              echo "::error::${module}: version is 0.0.0-SNAPSHOT (git unavailable or no matching commit); refusing to publish a fallback coordinate."
+              echo "1" > build/publish_failed_status
+              continue
+            fi
+            jar_url="${registry_base}/${group_path}/${module}/${version}/${module}-${version}.jar"
+            staged="stage/${module}-${version}.jar"
+            echo "::notice::${module}: version ${version}."
+            # One check per GAV: a 200 on BOTH the POM and the JAR proves the
+            # GAV is fully published AND downloads the canonical JAR bytes into
+            # stage/ (replacing the freshly-built staged jar via a temp file,
+            # and a 404 or transfer error cannot truncate it), so the release
+            # step attaches the exact bytes that live in the registry --
+            # guaranteeing byte-identity for already-published jars (e.g. an
+            # off-main prerelease that published the same GAV) independent of
+            # reproducible builds. Requiring the POM too avoids treating a
+            # partial publish (JAR present, POM absent) as complete. A 404
+            # means "not published yet"; keep the freshly-built staged jar and
+            # upload it via gradle (those exact bytes become canonical). curl -f
+            # exits nonzero on >=400, and the `if` context absorbs that under
+            # set -e. GLM-5.2
+            if download_canonical "$module" "$version" "$registry_base" "$group_path"; then
+              echo "::notice::${module}@${version} already published; downloaded canonical bytes into $staged, skipping upload."
+              echo "${module}=${version}|" >> build/published.txt
+              continue
+            fi
+            echo "::notice::${module}@${version} not yet published; uploading the staged jar."
+            set +e
+            ./gradlew :${module}:publish --no-daemon
+            pub_status=$?
+            set -e
+            if [ "$pub_status" -ne 0 ]; then
+              # A nonzero publish may be a 409 from a concurrent publish racing
+              # for the same new GAV. Re-check the GAV: if both POM and JAR now
+              # download, a peer won the race and we treat it as published
+              # (using the downloaded canonical bytes). Otherwise record the
+              # failure but continue the loop -- earlier modules may already
+              # be published and recorded, and exiting here would skip the
+              # release step, leaving those jars permanently absent from every
+              # GitHub Release. The release step runs with whatever was
+              # recorded; a final step fails the job afterward so a real
+              # publish failure is not hidden. Do NOT record this GAV or emit
+              # the "published" notice -- the upload genuinely failed. GLM-5.2
+              if download_canonical "$module" "$version" "$registry_base" "$group_path"; then
+                echo "::notice::${module}@${version}: publish returned $pub_status but POM+JAR now downloadable; treating as published (race lost), canonical bytes in $staged."
+                echo "${module}=${version}|" >> build/published.txt
+              else
+                echo "::error::${module}@${version}: publish failed (gradle exit $pub_status) and POM/JAR still not downloadable."
+                echo "$pub_status" > build/publish_failed_status
+                continue
+              fi
+            fi
+            echo "::notice::${module}@${version} published."
+          done
+      - name: Create one GitHub Release for this publish event.
+        # One GitHub Release per merge commit (or per workflow_dispatch SHA),
+        # tagged with that commit's <YYYYMMDD-utc>-<sha7> -- the same format as
+        # a per-jar version, but computed from the merge commit itself ($GITHUB_SHA),
+        # not from any jar's last-touching commit. So a rerun of the same commit
+        # targets the same release instead of creating a duplicate, and a failed
+        # release-creation step can be recovered by re-uploading into the
+        # existing release (gh release upload --clobber). The release tag is
+        # deliberately decoupled from each asset's per-jar version: the release
+        # tag identifies the merge commit that produced this release; each asset
+        # filename carries its own per-jar version (the commit that last
+        # changed that jar). The release carries every jar current at that merge
+        # commit as an asset; a jar already published to the registry (an earlier
+        # merge or an off-main prerelease) was downloaded from the registry into
+        # stage/ by the publish step, so the asset is byte-identical to the
+        # canonical jar in GitHub Packages. This step runs even if a later
+        # module's publish failed, so jars uploaded before the failure are still
+        # attached to a release; a final step fails the job afterward. GLM-5.2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          set -o pipefail
+          # Release tag = the merge commit's UTC date + first 7 chars of its
+          # SHA ($GITHUB_SHA). Same format as a per-jar version, but from the
+          # merge commit, so a rerun of the same commit produces the same tag
+          # (idempotent recovery) and different commits produce different tags
+          # (no cross-commit collision). The date is derived from the commit
+          # *epoch* (%ct) and formatted with `date -u`, NOT from
+          # `--date=format:%cd`: that format honors the commit's recorded
+          # timezone and ignores TZ=UTC, so a commit near midnight in a non-UTC
+          # zone would get the wrong date prefix. Converting the epoch in UTC
+          # matches the pdc-versioning Gradle plugin's
+          # Instant.ofEpochSecond(...).atZone(UTC) exactly. GLM-5.2
+          commit_epoch="$(git log -1 --format=%ct)"
+          release_id="$(date -u -d "@${commit_epoch}" +%Y%m%d)-${GITHUB_SHA:0:7}"
+          asset_files=()
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            mod="${line%%=*}"
+            rest="${line#*=}"
+            ver="${rest%%|*}"
+            path="${rest#*|}"
+            # A fresh publish (the pdc-publishing Gradle plugin's doLast)
+            # records the absolute path of the local jar that was uploaded to
+            # Maven; use it directly so the release asset is byte-identical to
+            # the canonical Maven artifact -- reproducible builds alone do
+            # not guarantee the build job's staged jar == the release job's
+            # freshly-published jar (different jobs, potentially different
+            # runner patch levels). An already-published GAV (recorded by the
+            # shell with an empty path) was downloaded from the registry into
+            # stage/ by download_canonical, so use that canonical download.
+            # GLM-5.2
+            if [ -n "$path" ] && [ -f "$path" ]; then
+              asset="$path"
+            else
+              asset="stage/${mod}-${ver}.jar"
+            fi
+            if [ -f "$asset" ]; then
+              asset_files+=("$asset")
+            else
+              echo "::warning::Expected asset $asset not found; skipping."
+            fi
+          done < build/published.txt
+          if [ "${#asset_files[@]}" -eq 0 ]; then
+            echo "::notice::No jars to release (published.txt empty); not creating a GitHub Release."
+            exit 0
+          fi
+          args=(release create "$release_id" --repo "$GITHUB_REPOSITORY"
+            --target "$GITHUB_SHA" --title "$release_id")
+          # Monotonic final/latest promotion: a release is final+latest only if
+          # $GITHUB_SHA is STILL the current main tip at release time (queried
+          # here, not inferred from the run's ref). Re-running an OLDER main
+          # commit ($GITHUB_REF=main but main has advanced) must NOT mark that
+          # historical release as latest (it would displace the newer merge);
+          # dispatching the same SHA from a non-main ref must NOT demote an
+          # already-final release to a prerelease. So: is_main_tip drives the
+          # fresh-create prerelease flag, and the recovery PATCH never demotes
+          # an existing final release and only sets latest on the current tip.
+          # GLM-5.2
+          main_tip=$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq '.commit.sha' 2>/dev/null || echo "")
+          if [ "$main_tip" != "$GITHUB_SHA" ]; then
+            args+=(--prerelease)
+          fi
+          # If the release already exists (a previous run created it then
+          # failed, or this is a rerun), `gh release create` exits nonzero;
+          # fall back to uploading the assets into the existing release AND
+          # reconciling its prerelease/latest channel, so a prior partial run
+          # (or a same-SHA rerun from a different branch, e.g. an off-main
+          # prerelease later reused from main via fast-forward) does not leave
+          # the wrong channel. Recovery is thus idempotent. PATCH /releases/{id}
+          # sets prerelease (JSON bool, -F) and make_latest (string enum
+          # "true"/"false"/"legacy", sent raw with -f so gh does not coerce it
+          # to a JSON boolean the API would reject). The prerelease/latest
+          # values are computed monotonically: an existing final release is
+          # never demoted to a prerelease, and make_latest="true" only when
+          # this commit is the current main tip. The release has no notes
+          # (see the fresh-create path), so the PATCH omits body. GLM-5.2
+          if gh "${args[@]}" "${asset_files[@]}"; then
+            echo "::notice::Created GitHub Release $release_id with ${#asset_files[@]} asset(s)."
+          else
+            echo "::notice::Release $release_id already exists; uploading assets and reconciling channel."
+            gh release upload "$release_id" --repo "$GITHUB_REPOSITORY" --clobber "${asset_files[@]}"
+            rel_num=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$release_id" --jq '.id')
+            existing_prerelease=$(gh api "repos/$GITHUB_REPOSITORY/releases/$rel_num" --jq '.prerelease')
+            # Promote to final only if this is the current main tip; otherwise
+            # keep the existing state (never demote a prior final release).
+            # GLM-5.2
+            if [ "$main_tip" = "$GITHUB_SHA" ]; then
+              new_prerelease=false
+            else
+              new_prerelease=$existing_prerelease
+            fi
+            # latest only for a final release that is also the current main tip.
+            if [ "$new_prerelease" = "false" ] && [ "$main_tip" = "$GITHUB_SHA" ]; then
+              new_make_latest=true
+            else
+              new_make_latest=false
+            fi
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$rel_num" \
+              -F prerelease="$new_prerelease" -f make_latest="$new_make_latest" --silent
+            echo "::notice::Uploaded ${#asset_files[@]} asset(s) and reconciled channel into existing release $release_id (prerelease=$new_prerelease, make_latest=$new_make_latest)."
+          fi
+      - name: Fail the job if any publish failed.
+        # The publish step records a real (non-race) publish failure to
+        # build/publish_failed_status instead of exiting mid-loop, so the
+        # release step can still attach jars uploaded before the failure.
+        # This step surfaces the failure afterward so it is not hidden.
+        # GLM-5.2
+        if: always()
+        run: |
+          if [ -f build/publish_failed_status ]; then
+            status="$(cat build/publish_failed_status)"
+            echo "::error::One or more jars failed to publish (last status $status); see the publish step log for details."
+            exit "$status"
+          fi

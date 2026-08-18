@@ -12,12 +12,12 @@ Start in the `pdc-keycloak-theme` directory
 
 - `../gradlew jar`
 
-The resulting jar should be in `build/libs`. This theme jar is what should be included in keycloak's `/providers` directory.
-
-If deploying this jar, you should rename it based on the git commit. Example:
-- `cp build/libs/pdc-keycloak-theme.jar pdc-keycloak-theme-20240313-05793e4.jar`
-
-The version id here is the UTC date of the commit in YYYMMDD format followed by a hyphen and the first seven digits of the commit SHA1 sum. There may be commits that are on one day in one part of the world but another day in another part of the world, hence the use of the UTC zone of the commit date.
+The resulting jar is in `build/libs` and is already named with its per-jar
+version, e.g. `pdc-keycloak-theme-20240313-05793e4.jar` -- no manual rename is
+needed. See the repository-root `README.md` for the canonical description of
+the version scheme (which commit's UTC date and SHA are used, and the
+shared-infrastructure-vs-own-subdirectory selection rule). This theme jar is
+what should be included in keycloak's `/providers` directory.
 
 ## How to deploy
 

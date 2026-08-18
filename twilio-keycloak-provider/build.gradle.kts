@@ -4,6 +4,8 @@
  */
 plugins {
     `java-library`
+    id("pdc-versioning")
+    id("pdc-publishing")
     // Test coverage
     jacoco
     // The shadow plugin can create "fat" and/or "shaded" jars, i.e. include dependencies in the
@@ -62,7 +64,17 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
+tasks.named<Jar>("jar") {
+    // The plain (unshaded) jar is not the deployable artifact; qualify it so
+    // it does not collide with the unqualified fat jar. GLM-5.2
+    archiveClassifier.set("plain")
+}
+
 tasks.shadowJar {
+    // The fat (shadow) jar is the primary artifact we publish and deploy; give
+    // it no classifier so it is `twilio-keycloak-provider-<version>.jar`.
+    // GLM-5.2
+    archiveClassifier.set("")
     // A diff of the dependencies of keycloak jars and twilio jars produced the following common
     // dependencies, such that these should be on the keycloak classpath already and should NOT be
     // included in a fat jar. This may be subject to change with revisions of twilio or keycloak.
