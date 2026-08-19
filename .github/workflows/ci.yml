@@ -49,6 +49,9 @@ jobs:
       - name: Build the Keycloak theme jar.
         working-directory: pdc-keycloak-theme
         run: ../gradlew jar
+      - name: Build the LinkToWelcomePage jar.
+        working-directory: link-to-welcome-page
+        run: ../gradlew jar
       - name: Stage jars for release.
         run: |
           mkdir -p stage
@@ -61,6 +64,7 @@ jobs:
           rm -f stage/twilio-keycloak-provider-*-plain.jar
           cp keycloak-required-action/build/libs/keycloak-required-action-*.jar stage/
           cp pdc-keycloak-theme/build/libs/pdc-keycloak-theme-*.jar stage/
+          cp link-to-welcome-page/build/libs/link-to-welcome-page-*.jar stage/
           ls -la stage/
       - name: Upload built jars for release.
         uses: actions/upload-artifact@v7
@@ -88,6 +92,16 @@ jobs:
         # status so the job (and thus any dependent job) fails -- a bare
         # `|| grep ...` would mask the failure because a successful grep
         # returns 0. GLM-5.2
+        run: |
+          set +e
+          ../gradlew test jacocoReport
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            grep -A 100 -i failed build/reports/tests/test/classes/*html || true
+          fi
+          exit "$status"
+      - name: Run tests and code coverage report for link-to-welcome-page.
+        working-directory: link-to-welcome-page
         run: |
           set +e
           ../gradlew test jacocoReport
@@ -220,7 +234,7 @@ jobs:
             rm -f "$pom_tmp" "$jar_tmp"
             return 1
           }
-          for module in twilio-keycloak-provider keycloak-required-action pdc-keycloak-theme; do
+          for module in twilio-keycloak-provider keycloak-required-action pdc-keycloak-theme link-to-welcome-page; do
             version="$(./gradlew :${module}:printVersion --no-daemon -q | tail -1 | cut -d= -f2)"
             # printVersion falls back to 0.0.0-SNAPSHOT when git is unavailable
             # or no commit matches. Publishing that fallback coordinate would
