@@ -183,8 +183,16 @@ jobs:
             local pom_tmp jar_tmp
             pom_tmp="$(mktemp -p stage)"
             jar_tmp="$(mktemp -p stage)"
-            if curl -fsS -o "$pom_tmp" -H "Authorization: Basic ${auth}" "$pom_url" \
-               && curl -fsS -o "$jar_tmp" -H "Authorization: Basic ${auth}" "$jar_url"; then
+            # -L (follow redirects): GitHub Packages serves artifact GETs with
+            # a 302 redirect to an S3-backed URL (github-registry-files...).
+            # Without -L, curl saves the 302 "Found" HTML page as the body and
+            # returns success, so the release would upload a ~400-byte HTML
+            # page as the "jar". The Authorization header is re-sent to the
+            # redirect target only if it matches the curl-allowed redirect
+            # host list; the S3 URL is allowed and needs no auth (it carries a
+            # signed query string), so -L is safe here. GLM-5.2
+            if curl -fsSL -o "$pom_tmp" -H "Authorization: Basic ${auth}" "$pom_url" \
+               && curl -fsSL -o "$jar_tmp" -H "Authorization: Basic ${auth}" "$jar_url"; then
               mv -f "$jar_tmp" "$dest"
               rm -f "$pom_tmp"
               return 0
