@@ -35,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get Zulu OpenJDK (current LTS version).
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: 'zulu'
           java-version: '25'
@@ -75,7 +75,7 @@ jobs:
       - name: Check out repository code.
         uses: actions/checkout@v7
       - name: Get Zulu OpenJDK (current LTS version)
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: 'zulu'
           java-version: '25'
@@ -122,7 +122,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get Zulu OpenJDK (current LTS version).
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: 'zulu'
           java-version: '25'
