@@ -39,6 +39,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '25'
+          cache: 'gradle'
       - name: Build a shaded fat jar for Twilio integration.
         working-directory: twilio-keycloak-provider
         run: ../gradlew shadowJar
@@ -79,6 +80,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '25'
+          cache: 'gradle'
       - name: Run tests and code coverage report.
         working-directory: twilio-keycloak-provider
         # Run the tests and generate coverage. On failure, print the failing
@@ -126,6 +128,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '25'
+          cache: 'gradle'
       - name: Download built jars.
         uses: actions/download-artifact@v8
         with:
