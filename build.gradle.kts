@@ -1,3 +1,5 @@
+import org.gradle.api.plugins.quality.CheckstyleExtension
+
 // Root build script for the auth multi-project build. The per-subproject
 // versioning and publishing logic lives in the buildSrc convention plugins
 // (pdc-versioning, pdc-publishing) applied by each subproject; this file holds
@@ -14,5 +16,15 @@ subprojects {
     tasks.withType<Jar>().configureEach {
         isReproducibleFileOrder = true
         isPreserveFileTimestamps = false
+    }
+
+    // Checkstyle 14 with the verbatim Google style config (issue #4);
+    // warnings for now, a later commit enforces. GLM-5.3-Flash
+    plugins.withId("checkstyle") {
+        the<CheckstyleExtension>().apply {
+            toolVersion = "14.0.0"
+            configDirectory.set(rootProject.layout.projectDirectory.dir("config/checkstyle"))
+            configProperties = mapOf("org.checkstyle.google.severity" to "warning")
+        }
     }
 }

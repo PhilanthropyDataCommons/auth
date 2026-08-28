@@ -8,6 +8,8 @@ plugins {
     id("pdc-publishing")
     // Test coverage
     jacoco
+    // Lint checks (Google Java Style). GLM-5.3-Flash
+    checkstyle
     // The shadow plugin can create "fat" and/or "shaded" jars, i.e. include dependencies in the
     // resulting jar. This is useful for including the twilio SDK and its dependencies on the
     // keycloak classpath with a single jar. The alternative would be to copy/include each jar

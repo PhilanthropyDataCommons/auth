@@ -97,6 +97,23 @@ jobs:
           fi
           exit "$status"
 
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v7
+      - name: Get Zulu OpenJDK (current LTS version).
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+      - name: Run Checkstyle over all subprojects.
+        # Invoking the tasks by name from the root runs them in every
+        # subproject that has them; the theme project has none. Error Prone
+        # is enforced inside compilation, which the build and test jobs run.
+        # GLM-5.3-Flash
+        run: ./gradlew checkstyleMain checkstyleTest
+
   release:
     needs: [build, test]
     # Publication only happens on a merge to main (a push to main) or on a
