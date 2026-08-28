@@ -8,6 +8,8 @@ plugins {
   id("pdc-publishing")
   // Lint checks (Google Java Style). GLM-5.3-Flash
   checkstyle
+  // Error Prone (plus NullAway) runs inside javac. GLM-5.3-Flash
+  id("net.ltgt.errorprone")
 }
 
 // We expect the current LTS version of the JDK for IDEs, compilation, etc.: 17.
