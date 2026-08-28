@@ -2,6 +2,7 @@
  * Copyright (c) 2021-2023 Niko Köbler
  * License: Apache Software License 2.0.
  */
+
 package org.philanthropydatacommons.keycloak.requiredaction;
 
 import org.keycloak.Config;
@@ -11,35 +12,33 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
 /**
+ * Creates {@link MobileNumberRequiredAction} instances for Keycloak.
+ *
  * @author Niko Köbler, https://www.n-k.de, @dasniko
  */
 public class MobileNumberRequiredActionFactory implements RequiredActionFactory {
 
-	@Override
-	public RequiredActionProvider create(KeycloakSession keycloakSession) {
-		return new MobileNumberRequiredAction();
-	}
+  @Override
+  public RequiredActionProvider create(KeycloakSession keycloakSession) {
+    return new MobileNumberRequiredAction();
+  }
 
-	@Override
-	public String getDisplayText() {
-		return "Update mobile number";
-	}
+  @Override
+  public String getDisplayText() {
+    return "Update mobile number";
+  }
 
-	@Override
-	public void init(Config.Scope scope) {
-	}
+  @Override
+  public void init(Config.Scope scope) {}
 
-	@Override
-	public void postInit(KeycloakSessionFactory keycloakSessionFactory) {
-	}
+  @Override
+  public void postInit(KeycloakSessionFactory keycloakSessionFactory) {}
 
-	@Override
-	public void close() {
-	}
+  @Override
+  public void close() {}
 
-	@Override
-	public String getId() {
-		return MobileNumberRequiredAction.PROVIDER_ID;
-	}
-
+  @Override
+  public String getId() {
+    return MobileNumberRequiredAction.PROVIDER_ID;
+  }
 }

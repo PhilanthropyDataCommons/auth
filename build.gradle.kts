@@ -24,20 +24,18 @@ subprojects {
         isPreserveFileTimestamps = false
     }
 
-    // Lint every subproject that applies the checkstyle plugin with Checkstyle
-    // 14 and the verbatim Google style configuration (the issue #4 suggestion).
-    // Findings report at warning severity while the existing sources are being
-    // conformed; a later commit escalates to error severity. GLM-5.3-Flash
+    // Checkstyle 14 with the verbatim Google style config (issue #4);
+    // violations fail the build. GLM-5.3-Flash
     plugins.withId("checkstyle") {
         the<CheckstyleExtension>().apply {
             toolVersion = "14.0.0"
             configDirectory.set(rootProject.layout.projectDirectory.dir("config/checkstyle"))
-            configProperties = mapOf("org.checkstyle.google.severity" to "warning")
+            configProperties = mapOf("org.checkstyle.google.severity" to "error")
         }
     }
 
     // Error Prone bug-pattern analysis in javac, plus NullAway (JSpecify
-    // mode) for nullness; warnings for now, a later commit enforces. GLM-5.3-Flash
+    // mode) for nullness; findings fail the build. GLM-5.3-Flash
     plugins.withId("net.ltgt.errorprone") {
         dependencies {
             add("errorprone", "com.google.errorprone:error_prone_core:2.50.0")
@@ -47,8 +45,7 @@ subprojects {
         }
         tasks.withType<JavaCompile>().configureEach {
             options.errorprone {
-                allErrorsAsWarnings.set(true)
-                check("NullAway", CheckSeverity.WARN)
+                check("NullAway", CheckSeverity.ERROR)
                 option("NullAway:AnnotatedPackages", "org.philanthropydatacommons")
                 option("NullAway:JSpecifyMode", "true")
             }
