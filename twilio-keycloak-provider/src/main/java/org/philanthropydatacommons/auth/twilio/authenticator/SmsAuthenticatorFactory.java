@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020 Niko Köbler
- * Copyright (c) 2023 Open Tech Strategies, LLC
+ * Copyright (c) 2023-2026 MacArthur Foundation
  * License: Expat (MIT) license.
  */
 package org.philanthropydatacommons.auth.twilio.authenticator;
