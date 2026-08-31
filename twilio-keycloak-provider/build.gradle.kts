@@ -36,10 +36,10 @@ dependencies {
     // These org.keycloak jars are already on the classpath within keycloak, so they do not need
     // to be declared as part of the runtime classpath. This also means they are excluded from the
     // jar produced by the shadow plugin via the shadowJar task.
-    compileOnly("org.keycloak:keycloak-core:26.7.2")
-    compileOnly("org.keycloak:keycloak-server-spi:26.7.2")
-    compileOnly("org.keycloak:keycloak-server-spi-private:26.7.2")
-    compileOnly("org.keycloak:keycloak-services:26.7.2")
+    compileOnly("org.keycloak:keycloak-core:26.7.3")
+    compileOnly("org.keycloak:keycloak-server-spi:26.7.3")
+    compileOnly("org.keycloak:keycloak-server-spi-private:26.7.3")
+    compileOnly("org.keycloak:keycloak-services:26.7.3")
     compileOnly("com.github.dasniko:keycloak-spi-bom:26.7.0")
     // Twilio's dependencies are used by our extension but not intended to be further exposed.
     // The shadow plugin jar (shadowJar task) will include this and its dependencies.
@@ -53,10 +53,10 @@ dependencies {
     testImplementation("org.slf4j:slf4j-simple:2.0.18")
     // To create mock instances
     testImplementation("org.mockito:mockito-junit-jupiter:5.23.0")
-    testImplementation("org.keycloak:keycloak-core:26.7.2")
-    testImplementation("org.keycloak:keycloak-server-spi-private:26.7.2")
-    testImplementation("org.keycloak:keycloak-server-spi:26.7.2")
-    testImplementation("org.keycloak:keycloak-services:26.7.2")
+    testImplementation("org.keycloak:keycloak-core:26.7.3")
+    testImplementation("org.keycloak:keycloak-server-spi-private:26.7.3")
+    testImplementation("org.keycloak:keycloak-server-spi:26.7.3")
+    testImplementation("org.keycloak:keycloak-services:26.7.3")
 }
 
 tasks.named<Test>("test") {
