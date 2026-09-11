@@ -52,6 +52,17 @@ To see what jars are in the keycloak distribution, within a shell on the keycloa
 Example command inside a bitnami keycloak container:
 `find /opt/bitnami/keycloak/lib/lib/main /opt/bitnami/keycloak/providers -name "*.jar"`
 
+There is an automated PRE-SHADE check for the class-overlap concern: the `keycloak-classpath-overlap` CI workflow (`.github/workflows/keycloak-classpath-overlap.yml`) resolves the twilio runtime classpath (twilio + all its transitive deps, before the shadow plugin's exclude/relocate directives strip anything), downloads the Keycloak distribution the provider targets, and runs `scripts/check_keycloak_classpath_overlap.py` to report any `.class` in a twilio-side jar that is also present in a Keycloak runtime jar. The shadow `exclude(dependency(...))` directives remove a whole colliding jar from the fat jar; `relocate(...)` directives rename colliding classes as a defense-in-depth fallback. Per project policy an overlap is acceptable ONLY when the jar is excluded (so the fat jar stays small); relocation alone is not sufficient, so the check FAILS on any overlapping twilio jar that is not excluded.
+
+Run the same check locally against an unpacked Keycloak distribution:
+
+```
+../gradlew -I scripts/collect-runtime-classpath.init.gradle.kts collectRuntimeClasspathForOverlap
+python3 scripts/check_keycloak_classpath_overlap.py build/runtime-classpath-for-overlap /path/to/keycloak build.gradle.kts
+```
+
+The script prints, per twilio-side jar and per Keycloak jar, the colliding classes. It exits non-zero when an overlapping twilio jar is NOT excluded by an `exclude(dependency(...))`; add that exclude in the `shadowJar` task to fix it (a `relocate(...)` alone is defensive and will not make the check pass).
+
 If all appears to be OK, copy the fat jar to keycloak's `/providers` directory or make it visible there by some other means (e.g. docker volume mount).
 
 ## How to use the software in keycloak
