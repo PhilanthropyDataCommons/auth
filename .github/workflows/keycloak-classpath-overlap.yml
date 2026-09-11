@@ -1,0 +1,114 @@
+name: Keycloak classpath overlap
+
+# Verify, at the DEPENDENCY-RESOLUTION layer (PRE-shade), that every twilio
+# runtime-classpath jar whose classes collide with the Keycloak runtime
+# classpath is covered by an exclude(dependency(...)) in the shadowJar task.
+#
+# Why pre-shade: the shadowJar task's exclude(dependency(...)) removes a whole
+# jar from the fat jar; relocate(...) renames colliding classes as a
+# defense-in-depth fallback. Neither changes dependency RESOLUTION, so the
+# resolved runtimeClasspath is the true "before shading" picture -- every jar
+# that would be bundled if no excludes were applied. Per project policy an
+# overlap is acceptable ONLY when the jar is excluded (keeps the fat jar
+# small); relocation alone is NOT sufficient -- it is defensive against future
+# Keycloak upgrades, not a substitute for an exclude. So the check FAILS on any
+# overlapping twilio jar that is not excluded, and prints, per twilio-side jar
+# and per Keycloak jar, the colliding classes so the missing exclude is obvious.
+#
+# This catches drift from bumps to twilio (the big risk: Twilio's transitive
+# deps -- jackson, commons-codec, httpclient, slf4j, gson, ... overlap heavily
+# with what Keycloak ships), keycloak, or the shadow plugin itself. The Keycloak
+# version is derived from the org.keycloak:keycloak-core compileOnly dependency
+# in twilio-keycloak-provider/build.gradle.kts so the check is always against
+# the Keycloak the provider will actually run on, with no version drift. The
+# downloaded distribution is cached per version.
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  keycloak-classpath-overlap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code.
+        uses: actions/checkout@v7
+      - name: Get Zulu OpenJDK (current LTS version).
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'zulu'
+          java-version: '25'
+          cache: 'gradle'
+      - name: Collect the resolved twilio runtime classpath (pre-shade input).
+        # The init script registers a `collectRuntimeClasspathForOverlap` task
+        # that copies the resolved `runtimeClasspath` files into
+        # build/runtime-classpath-for-overlap/. The shadow excludes do NOT
+        # affect resolution, so this is the true pre-shade input set: twilio +
+        # all transitives.
+        working-directory: twilio-keycloak-provider
+        run: |
+          ../gradlew -I ./scripts/collect-runtime-classpath.init.gradle.kts \
+            collectRuntimeClasspathForOverlap
+          echo "Collected runtime-classpath jars:"
+          ls -1 build/runtime-classpath-for-overlap/
+      - name: Resolve the targeted Keycloak version.
+        id: kcver
+        # The Keycloak version the provider is compiled against is the version
+        # of the org.keycloak:keycloak-core compileOnly dependency. We download
+        # that exact Keycloak server distribution so the overlap check is always
+        # against the Keycloak the provider will actually run on, with no
+        # version drift.
+        run: |
+          set -euo pipefail
+          # `|| true` lets the assignment yield "" under `set -o pipefail` so the
+          # empty-value check below prints the actionable diagnostic.
+          ver="$(grep -oP 'org\.keycloak:keycloak-core:\K[0-9][0-9A-Za-z.-]*' \
+            twilio-keycloak-provider/build.gradle.kts | head -n1 || true)"
+          if [ -z "${ver}" ]; then
+            echo "::error::Could not determine the Keycloak version from \
+              twilio-keycloak-provider/build.gradle.kts (expected an \
+              org.keycloak:keycloak-core:<version> dependency)."
+            exit 1
+          fi
+          echo "version=${ver}" >> "$GITHUB_OUTPUT"
+          echo "Resolved targeted Keycloak version: ${ver}"
+      - name: Cache the unpacked Keycloak distribution.
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: keycloak-dist
+          key: keycloak-${{ steps.kcver.outputs.version }}-unpacked
+      - name: Download and unpack the Keycloak distribution.
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          ver="${{ steps.kcver.outputs.version }}"
+          url="https://github.com/keycloak/keycloak/releases/download/${ver}/keycloak-${ver}.zip"
+          echo "Downloading ${url}"
+          curl -fL --retry 3 -o "keycloak-${ver}.zip" "${url}"
+          # The zip unpacks to a single top-level dir keycloak-<ver>; flatten it
+          # into keycloak-dist/ so the comparison step's path is version-
+          # independent.
+          mkdir -p keycloak-dist keycloak-dist-tmp
+          unzip -q "keycloak-${ver}.zip" -d keycloak-dist-tmp
+          mv keycloak-dist-tmp/keycloak-"${ver}"/* keycloak-dist/
+          rm -rf keycloak-dist-tmp "keycloak-${ver}.zip"
+      - name: Check for pre-shade class overlap with the Keycloak runtime classpath.
+        # The script classifies each pre-shade overlap by whether the twilio
+        # jar is excluded by an exclude(dependency(...)) in the shadowJar task.
+        # Exit 1 = an overlapping jar is NOT excluded (the shadow jar would
+        # ship its classes; relocation is defensive and does NOT make it pass)
+        # -- a regression; the per-jar breakdown + an ::error:: annotation are
+        # emitted. Exit 0 = every overlapping jar is excluded. Exit 2 =
+        # setup/usage error. The 3rd arg is the build.gradle.kts that supplies
+        # the exclude/relocate directives (relocates are shown as an
+        # informational [relocated] annotation only).
+        run: |
+          python3 twilio-keycloak-provider/scripts/check_keycloak_classpath_overlap.py \
+            twilio-keycloak-provider/build/runtime-classpath-for-overlap \
+            "${{ github.workspace }}/keycloak-dist" \
+            twilio-keycloak-provider/build.gradle.kts
