@@ -100,16 +100,17 @@ public class SmsAuthenticator implements Authenticator {
 
     try {
       String smsText = this.getLocalizedSmsText(context, code, ttl);
-      this.getSmsSender().send(mobileNumber, smsText);
+      this.getSmsSender().send(context.getSession(), mobileNumber, smsText);
       LOGGER.debug("Sent OTP via SMS to user '{}'", user.getId());
       context.challenge(
           context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
     } catch (RuntimeException e) {
+      LOGGER.warn("Could not send the SMS authentication message.", e);
       context.failureChallenge(
           AuthenticationFlowError.INTERNAL_ERROR,
           context
               .form()
-              .setError("smsAuthSmsNotSent", e.getMessage())
+              .setError("smsAuthSmsNotSent")
               .createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
     }
   }
