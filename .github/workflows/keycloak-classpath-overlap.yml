@@ -31,7 +31,7 @@ jobs:
           cache: 'gradle'
       - name: Cache the downloaded/unpacked Keycloak distribution.
         # Keyed on build.gradle.kts so a keycloak version bump invalidates it.
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: twilio-keycloak-provider/build/keycloak-overlap-dist
           key: keycloak-overlap-dist-${{ runner.os }}-${{ hashFiles('twilio-keycloak-provider/build.gradle.kts') }}
