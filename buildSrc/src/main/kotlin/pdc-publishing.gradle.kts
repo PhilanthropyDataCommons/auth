@@ -1,17 +1,14 @@
 // Convention plugin: Maven publication to GitHub Packages. Applied by each
 // subproject via `id("pdc-publishing")`, alongside `id("pdc-versioning")`.
 //
-// Publishes each jar to the GitHub Packages Maven registry under group
-// org.philanthropydatacommons. For subprojects using the shadow plugin the
-// fat jar is published from components["shadow"] (the deployable artifact);
-// for plain subprojects from components["java"] (selection deferred to
-// afterEvaluate so plugin order does not matter). The plain -plain jar is
-// not published. The registry is the source of truth for "is this GAV
-// released?"; the workflow GETs each jar from the registry before uploading
-// -- a 200 both proves the GAV is published and delivers the canonical bytes
-// (so unchanged jars are not re-uploaded and release assets are byte-identical
-// to the canonical jar). A concurrent publish racing for the same new GAV
-// yields a 409 from the registry, tolerated as "already published". GLM-5.2
+// Publishes each plain jar (components["java"], built by the `jar` task) to
+// the GitHub Packages Maven registry under group org.philanthropydatacommons.
+// The registry is the source of truth for "is this GAV released?"; the
+// workflow GETs each jar from the registry before uploading -- a 200 both
+// proves the GAV is published and delivers the canonical bytes (so unchanged
+// jars are not re-uploaded and release assets are byte-identical to the
+// canonical jar). A concurrent publish racing for the same new GAV yields a
+// 409 from the registry, tolerated as "already published".
 
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.authentication.http.BasicAuthentication
@@ -38,26 +35,10 @@ publishing {
         register<MavenPublication>("mavenJava") {
             // artifactId = project name -> GAV org.philanthropydatacommons:<module>:<version>
             artifactId = project.name
-            // Defer the software-component selection until all plugins are
-            // applied (afterEvaluate), so the order of `id("pdc-publishing")`
-            // vs `id("com.gradleup.shadow")` in a subproject's build.gradle.kts
-            // does not matter. An eager `plugins.hasPlugin(...)` check here
-            // evaluates at publication-registration time -- before shadow is
-            // applied in twilio-keycloak-provider (where pdc-publishing is
-            // listed before shadow) -- so it would select components["java"]
-            // and publish the classifier-only -plain jar instead of the
-            // deployable fat jar. The shadow plugin exposes a `shadow`
-            // software component whose main artifact is the fat jar; plain
-            // subprojects use the `java` component. GLM-5.2
-            val publication = this
-            project.afterEvaluate {
-                val component = if (plugins.hasPlugin("com.gradleup.shadow")) {
-                    components["shadow"]
-                } else {
-                    components["java"]
-                }
-                publication.from(component)
-            }
+            // Every subproject applies `java-library` before this plugin, so the
+            // `java` component (the plain `jar` output) is available at
+            // registration time.
+            from(components["java"])
         }
     }
 }
@@ -83,8 +64,7 @@ gradle.taskGraph.whenReady(
                 if (task.project == project && n.startsWith("publishMavenJavaPublication") && n.endsWith("ToGithubRepository")) {
                     task.doLast {
                         if (task.state.failure != null) return@doLast
-                        val jarTask = tasks.findByName("shadowJar") ?: tasks.findByName("jar")
-                        val jarFile = (jarTask as? Jar)?.archiveFile?.get()?.asFile
+                        val jarFile = (tasks.findByName("jar") as? Jar)?.archiveFile?.get()?.asFile
                         publishedFile.parentFile.mkdirs()
                         publishedFile.appendText(
                             "${project.name}=${project.version}|${jarFile?.absolutePath ?: ""}\n",
