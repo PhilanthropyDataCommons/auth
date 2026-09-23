@@ -126,6 +126,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '25'
+          cache: 'gradle'
       - name: Run Checkstyle over all subprojects.
         # Invoking the tasks by name from the root runs them in every
         # subproject that has them; the theme project has none. Error Prone
