@@ -134,7 +134,7 @@ jobs:
         run: ./gradlew checkstyleMain checkstyleTest
 
   release:
-    needs: [build, test]
+    needs: [build, test, checkstyle]
     # Publication only happens on a merge to main (a push to main) or on a
     # manual workflow_dispatch rerun -- never on individual pull requests.
     # GLM-5.2
