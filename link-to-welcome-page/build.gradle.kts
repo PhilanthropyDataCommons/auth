@@ -32,10 +32,10 @@ repositories {
 }
 
 dependencies {
-  compileOnly("org.keycloak:keycloak-core:26.7.3")
-  compileOnly("org.keycloak:keycloak-server-spi:26.7.3")
-  compileOnly("org.keycloak:keycloak-server-spi-private:26.7.3")
-  compileOnly("org.keycloak:keycloak-services:26.7.3")
+  compileOnly("org.keycloak:keycloak-core:26.8.0")
+  compileOnly("org.keycloak:keycloak-server-spi:26.8.0")
+  compileOnly("org.keycloak:keycloak-server-spi-private:26.8.0")
+  compileOnly("org.keycloak:keycloak-services:26.8.0")
   // slf4j API only; in Keycloak it is bridged to jboss-logging at runtime.
   compileOnly("org.slf4j:slf4j-api:2.0.18")
 
@@ -47,10 +47,10 @@ dependencies {
   testImplementation("org.slf4j:slf4j-simple:2.0.18")
   // To create mock instances (and to mockStatic the Keycloak helpers we delegate to).
   testImplementation("org.mockito:mockito-junit-jupiter:5.23.0")
-  testImplementation("org.keycloak:keycloak-core:26.7.3")
-  testImplementation("org.keycloak:keycloak-server-spi-private:26.7.3")
-  testImplementation("org.keycloak:keycloak-server-spi:26.7.3")
-  testImplementation("org.keycloak:keycloak-services:26.7.3")
+  testImplementation("org.keycloak:keycloak-core:26.8.0")
+  testImplementation("org.keycloak:keycloak-server-spi-private:26.8.0")
+  testImplementation("org.keycloak:keycloak-server-spi:26.8.0")
+  testImplementation("org.keycloak:keycloak-services:26.8.0")
 }
 
 tasks.named<Test>("test") {
