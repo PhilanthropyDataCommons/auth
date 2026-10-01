@@ -196,10 +196,6 @@ version, so the filename is `link-to-welcome-page-<version>.jar` (for example
 `link-to-welcome-page-20260819-c0386c9.jar`); the wildcard above matches it
 without hardcoding the version.
 
-## Compatibility
-
-Built and tested against Keycloak 26.7.3. Targets JRE 17.
-
 ## Security
 
 ### No open link target via end-user input
