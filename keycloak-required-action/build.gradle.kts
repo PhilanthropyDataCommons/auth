@@ -30,8 +30,8 @@ repositories {
 }
 
 dependencies {
-  compileOnly("org.keycloak:keycloak-core:26.7.4")
-  compileOnly("org.keycloak:keycloak-server-spi:26.7.4")
-  compileOnly("org.keycloak:keycloak-server-spi-private:26.7.4")
-  compileOnly("org.keycloak:keycloak-services:26.7.4")
+  compileOnly("org.keycloak:keycloak-core:26.8.0")
+  compileOnly("org.keycloak:keycloak-server-spi:26.8.0")
+  compileOnly("org.keycloak:keycloak-server-spi-private:26.8.0")
+  compileOnly("org.keycloak:keycloak-services:26.8.0")
 }
