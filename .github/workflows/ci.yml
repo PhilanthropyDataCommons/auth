@@ -40,9 +40,9 @@ jobs:
           distribution: 'zulu'
           java-version: '25'
           cache: 'gradle'
-      - name: Build a shaded fat jar for Twilio integration.
+      - name: Build the Twilio integration jar.
         working-directory: twilio-keycloak-provider
-        run: ../gradlew shadowJar
+        run: ../gradlew jar
       - name: Build the RequiredAction jar.
         working-directory: keycloak-required-action
         run: ../gradlew jar
@@ -57,11 +57,8 @@ jobs:
           mkdir -p stage
           # The jars are built with their per-jar version in the filename by
           # the pdc-versioning convention plugin, e.g.
-          # pdc-keycloak-theme-20260816-a33ec28.jar. The fat (shadow) jar is the
-          # unqualified twilio-keycloak-provider-<version>.jar; the -plain jar
-          # is not deployed/published. GLM-5.2
+          # pdc-keycloak-theme-20260816-a33ec28.jar.
           cp twilio-keycloak-provider/build/libs/twilio-keycloak-provider-*.jar stage/
-          rm -f stage/twilio-keycloak-provider-*-plain.jar
           cp keycloak-required-action/build/libs/keycloak-required-action-*.jar stage/
           cp pdc-keycloak-theme/build/libs/pdc-keycloak-theme-*.jar stage/
           cp link-to-welcome-page/build/libs/link-to-welcome-page-*.jar stage/
@@ -173,8 +170,8 @@ jobs:
           path: stage
       - name: Publish changed jars to GitHub Packages (Maven).
         # pdc-versioning computes each jar's version from git; pdc-publishing
-        # wires maven-publish to GitHub Packages (components["shadow"] for the
-        # fat twilio jar, components["java"] for the plain jars). Before each
+        # wires maven-publish to GitHub Packages (components["java"] for each
+        # plain jar). Before each
         # upload, HEAD the registry's .pom URL and skip GAVs that already exist
         # (so unchanged jars are not re-uploaded). A concurrent publish racing
         # for the same new GAV yields a 409 from the registry, tolerated as
