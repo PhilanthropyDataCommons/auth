@@ -37,7 +37,6 @@ dependencies {
     compileOnly("org.keycloak:keycloak-server-spi:26.8.0")
     compileOnly("org.keycloak:keycloak-server-spi-private:26.8.0")
     compileOnly("org.keycloak:keycloak-services:26.8.0")
-    compileOnly("com.github.dasniko:keycloak-spi-bom:26.7.0")
     // Use JUnit Jupiter for testing.
     testRuntimeOnly("org.junit.platform:junit-platform-engine:6.1.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.3")
