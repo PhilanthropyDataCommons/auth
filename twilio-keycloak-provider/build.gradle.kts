@@ -33,10 +33,10 @@ repositories {
 dependencies {
     // These org.keycloak jars are already on the classpath within keycloak, so they do not need
     // to be declared as part of the runtime classpath.
-    compileOnly("org.keycloak:keycloak-core:26.8.0")
-    compileOnly("org.keycloak:keycloak-server-spi:26.8.0")
-    compileOnly("org.keycloak:keycloak-server-spi-private:26.8.0")
-    compileOnly("org.keycloak:keycloak-services:26.8.0")
+    compileOnly("org.keycloak:keycloak-core:26.8.1")
+    compileOnly("org.keycloak:keycloak-server-spi:26.8.1")
+    compileOnly("org.keycloak:keycloak-server-spi-private:26.8.1")
+    compileOnly("org.keycloak:keycloak-services:26.8.1")
     // Use JUnit Jupiter for testing.
     testRuntimeOnly("org.junit.platform:junit-platform-engine:6.1.3")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.3")
@@ -45,14 +45,14 @@ dependencies {
     testImplementation("org.slf4j:slf4j-simple:2.0.20")
     // To create mock instances
     testImplementation("org.mockito:mockito-junit-jupiter:5.24.0")
-    testImplementation("org.keycloak:keycloak-core:26.8.0")
+    testImplementation("org.keycloak:keycloak-core:26.8.1")
     // compileOnly above for main sources (Keycloak provides it at runtime) but a test-runtime
     // dependency here, so tests exercise the real SimpleHttp class and will catch a future
     // removal from Keycloak at test time. Its published POM also brings Apache HttpClient 4
     // (SimpleHttp's transport) in transitively, version-managed by Keycloak.
-    testImplementation("org.keycloak:keycloak-server-spi-private:26.8.0")
-    testImplementation("org.keycloak:keycloak-server-spi:26.8.0")
-    testImplementation("org.keycloak:keycloak-services:26.8.0")
+    testImplementation("org.keycloak:keycloak-server-spi-private:26.8.1")
+    testImplementation("org.keycloak:keycloak-server-spi:26.8.1")
+    testImplementation("org.keycloak:keycloak-services:26.8.1")
 }
 
 tasks.named<Test>("test") {
