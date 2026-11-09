@@ -37,7 +37,7 @@ dependencies {
   compileOnly("org.keycloak:keycloak-server-spi-private:26.8.2")
   compileOnly("org.keycloak:keycloak-services:26.8.2")
   // slf4j API only; in Keycloak it is bridged to jboss-logging at runtime.
-  compileOnly("org.slf4j:slf4j-api:2.0.18")
+  compileOnly("org.slf4j:slf4j-api:2.0.20")
 
   // Use JUnit Jupiter for testing, mirroring the twilio-keycloak-provider module.
   testRuntimeOnly("org.junit.platform:junit-platform-engine:6.1.3")
