@@ -5,6 +5,7 @@ updates:
       - 'pdc-keycloak-theme'
       - 'twilio-keycloak-provider'
       - 'keycloak-required-action'
+      - 'link-to-welcome-page'
     schedule:
       interval: 'daily'
     groups:
